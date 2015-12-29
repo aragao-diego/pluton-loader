@@ -20,18 +20,6 @@ angular
 var version = '0.0.6';
 })();
 (function(){
-
-ConfigRoutes.$inject = ["$scope", "servicoTeste"];
-angular.module('da-loader')
-    .config(ConfigRoutes);
-
-/* @ngInject */
-function ConfigRoutes($scope, servicoTeste){
-
-}
-
-})();
-(function(){
 LoaderDirective.$inject = ["$rootScope", "LoaderService"];
 angular
     .module('da-loader')
@@ -108,4 +96,3 @@ function ViewConfig($templateCache){
 }
 
 })();
-(function(){ angular .module('da-loader') .config(configViews); function configViews(){ } })();
