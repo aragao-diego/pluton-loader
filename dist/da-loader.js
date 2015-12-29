@@ -1,6 +1,4 @@
 (function(){
-'use strict';
-
 angular
     .module('da-loader')
     .controller('daLoaderController', DaLoaderController);
@@ -10,16 +8,16 @@ DaLoaderController.$injector = ['$scope'];
 function DaLoaderController(){
 
 }
-})();
-(function(){
+
+
     
 angular
     .module('da-loader', [ 'ui-router' ] );
 
 
 var version = '0.1.1';
-})();
-(function(){
+
+
 LoaderDirective.$inject = ["$rootScope", "LoaderService"];
 angular
     .module('da-loader')
@@ -84,8 +82,8 @@ function LoaderDirective($rootScope, LoaderService){
         }
     };
 }
-})();
-(function(){
+
+
 ViewConfig.$inject = ["$templateCache"];
 angular
     .module('da-loader')
@@ -94,5 +92,4 @@ angular
 function ViewConfig($templateCache){
     $templateCache.put('id-loader/loader.html', '<div id="loading" ng-style="{\'display\': displayStatus()}"></div>');
 }
-
 })();

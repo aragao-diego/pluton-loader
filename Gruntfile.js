@@ -131,6 +131,8 @@ module.exports = function(grunt) {
 
     concat: {
       options: {
+        banner: '(function(){',
+        footer: '})();'
       },
       dist: {
         src: ['<%= yeoman.temp %>/**/*.js', '<%= yeoman.temp %>/**/*.html'],
@@ -154,7 +156,9 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
-        mangle: false
+        mangle: false,
+        banner: '(function(){',
+        footer: '})();'
       },
       dist: {
         files: {

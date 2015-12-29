@@ -1,5 +1,3 @@
-(function(){
-'use strict';
 
 angular
     .module('da-loader')
@@ -10,4 +8,3 @@ DaLoaderController.$injector = ['$scope'];
 function DaLoaderController(){
 
 }
-})();

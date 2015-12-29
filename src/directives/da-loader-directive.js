@@ -1,4 +1,4 @@
-(function(){
+
 angular
     .module('da-loader')
     .directive(LoaderDirective);
@@ -62,4 +62,3 @@ function LoaderDirective($rootScope, LoaderService){
         }
     };
 }
-})();
