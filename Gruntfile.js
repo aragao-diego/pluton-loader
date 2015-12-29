@@ -4,8 +4,9 @@ module.exports = function(grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   var appConfig = {
-    app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    app: require('./bower.json').appPath || 'src',
+    dist: 'dist',
+    temp: 'tmp'
   };
 
   // Configure Grunt 
@@ -51,7 +52,7 @@ module.exports = function(grunt) {
           expand: true,
           dot: true,
           cwd: '<%= yeoman.app %>',
-          dest: '<%= yeoman.dist %>',
+          dest: '<%= yeoman.temp %>',
           src: [ '**']
         }]
       }
@@ -98,9 +99,9 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%= yeoman.dist %>',
-          src: ['config/**/*.html','directives/**/*.html','filters/**/*.html','interceptors/**/*.html','modules/**/*.html','services/**/*.html','*.html'],
-          dest: '<%= yeoman.dist %>'
+          cwd: '<%= yeoman.temp %>',
+          src: ['**/*.html'],
+          dest: '<%= yeoman.temp %>'
         }]
       }
     },
@@ -127,6 +128,45 @@ module.exports = function(grunt) {
       }
     },
 
+
+    concat: {
+      options: {
+      },
+      dist: {
+        src: ['<%= yeoman.temp %>/**/*.js', '<%= yeoman.temp %>/**/*.html'],
+        dest: '<%= yeoman.dist %>/da-loader.js',
+      },
+    },
+
+    ngAnnotate: {
+        options: {
+        },
+        dist: {
+            files: [
+              {
+                expand: true,
+                src: ['<%= yeoman.temp %>/**/*.js']
+              }
+            ]
+        },
+    },
+
+
+    uglify: {
+      options: {
+        mangle: false
+      },
+      dist: {
+        files: {
+          '<%= yeoman.dist %>/da-loader.min.js': ['<%= yeoman.temp %>/**/*.js', '<%= yeoman.temp %>/**/*.html']
+        }
+      }
+    },
+
+    clean: {
+      dist: ["<%= yeoman.temp %>/"]
+    }
+
   });
 
 
@@ -143,9 +183,11 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build',[
     'copy:dist',
-    'processhtml:dist',
-    'htmlmin',
-    'cssmin'
+    'ngAnnotate:dist',
+    'concat:dist',
+    'htmlmin:dist',
+    'uglify:dist',
+    //'clean:dist'
   ]);
 
   grunt.registerTask('default', [
