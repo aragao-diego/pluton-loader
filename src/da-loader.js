@@ -1,6 +1,8 @@
 (function(){
     
 angular
-    .module('da-loader', []);
+    .module('da-loader', [ 'ui-router' ] );
 
+
+var version = '0.0.6';
 })();
