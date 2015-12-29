@@ -5,6 +5,19 @@
   "homepage": "https://gitlab.apoio.fsw.ctis.com.br/dit-angular/da-loader",
   "license": "MIT",
   "private": true,
+  "main": "dist/da-loader.js",
+  "ignore": [
+    "src",
+    "spec",
+    ".bowerrc",
+    ".gitignore",
+    ".jshintignore",
+    ".jshintrc",
+    "bower.json",
+    "gruntfile.js",
+    "package.json",
+    "README.md"
+  ],
   "dependencies": {
     "angular": "^1.4.x"
   },
