@@ -17,7 +17,7 @@ angular
     .module('da-loader', [ 'ui-router' ] );
 
 
-var version = '0.0.10';
+var version = '0.1.1';
 })();
 (function(){
 LoaderDirective.$inject = ["$rootScope", "LoaderService"];
