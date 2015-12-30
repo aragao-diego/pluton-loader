@@ -1,4 +1,5 @@
 (function(){
+'use strict'
 var subModules = ['controllers', 'directives', 'services', 'views'];
 subModules.forEach(createSubModules);
 
@@ -29,7 +30,7 @@ function DaLoaderController($scope){
 LoaderDirective.$inject = ["$rootScope", "LoaderService"];
 angular
     .module('da-loader')
-    .directive(LoaderDirective);
+    .directive('daLoader', LoaderDirective);
 
 /* @ngInject */
 function LoaderDirective($rootScope, LoaderService){

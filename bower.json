@@ -1,7 +1,7 @@
 {
   "name": "da-loader",
   "description": "Componente LOADER angular",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "homepage": "https://gitlab.apoio.fsw.ctis.com.br/dit-angular/da-loader",
   "license": "MIT",
   "private": true,
@@ -23,7 +23,9 @@
   },
   "devDependencies": {
     "jasmine-expect": "~1.22.3",
-    "angular-ui-router": "~0.2.13"
+    "angular-ui-router": "~0.2.13",
+    "angular-mocks": "~1.4.8",
+    "oclazyload": "~1.0.9"
   },
   "resolutions": {
     "angular": "1.4.7"
