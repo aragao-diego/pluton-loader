@@ -1,14 +1,4 @@
 (function(){
-DaLoaderController.$inject = ["$scope"];
-angular
-    .module('da-loader')
-    .controller('daLoaderController', DaLoaderController);
-
-/* @ngInject */
-function DaLoaderController($scope){
-
-}
-
 var subModules = ['controllers', 'directives', 'services', 'views'];
 subModules.forEach(createSubModules);
 
@@ -25,6 +15,16 @@ function createSubModules(element, index, array){
     angular.module(moduleName, []);
     array[index] = moduleName;
 };
+
+DaLoaderController.$inject = ["$scope"];angular
+    .module('da-loader')
+    .controller('daLoaderController', DaLoaderController);
+
+/* @ngInject */
+function DaLoaderController($scope){
+
+}
+
 
 LoaderDirective.$inject = ["$rootScope", "LoaderService"];
 angular
@@ -132,7 +132,9 @@ function LoaderService($state){
 ViewConfig.$inject = ["$templateCache"];angular
     .module('da-loader')
     .run(ViewConfig);
+    
 /* @ngInject */
 function ViewConfig($templateCache){
     $templateCache.put('id-loader/loader.html', '<div id="loading" ng-style="{\'display\': displayStatus()}"></div>');
-}})();
+}
+})();
