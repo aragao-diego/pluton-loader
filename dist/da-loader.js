@@ -1,22 +1,30 @@
 (function(){
+DaLoaderController.$inject = ["$scope"];
 angular
     .module('da-loader')
     .controller('daLoaderController', DaLoaderController);
 
-DaLoaderController.$injector = ['$scope'];
-
-function DaLoaderController(){
+/* @ngInject */
+function DaLoaderController($scope){
 
 }
 
+var subModules = ['controllers', 'directives', 'services', 'views'];
+subModules.forEach(createSubModules);
 
-    
+
 angular
-    .module('da-loader', [ 'ui-router' ] );
+    .module('da-loader', ['ui-router'].concat(subModules) );
 
 
-var version = '0.0.23';
+var version = '0.0.24';
 
+
+function createSubModules(element, index, array){
+    var moduleName = 'da-loder.'+element;
+    angular.module(moduleName, []);
+    array[index] = moduleName;
+};
 
 LoaderDirective.$inject = ["$rootScope", "LoaderService"];
 angular
@@ -41,7 +49,7 @@ function LoaderDirective($rootScope, LoaderService){
         link: function($scope, element, attrs, controller) {
 
             $scope.displayStatus = function(){
-                return LoaderService.isShowing ? 'block' : 'none';
+                return LoaderService.status() ? 'block' : 'none';
             }
 
 
@@ -84,12 +92,47 @@ function LoaderDirective($rootScope, LoaderService){
 }
 
 
-ViewConfig.$inject = ["$templateCache"];
-angular
+LoaderService.$inject = ["$state"];angular
+    .module('da-loader')
+    .service('LoaderService', LoaderService );
+
+/* @ngInject */
+function LoaderService($state){
+    var vm = this;
+
+    var isShowing = false;
+
+    var service = {
+        isShowing: isShowing,
+
+        show: show,
+        hide: hide,
+        toggle: toggle,
+        status: status
+    };
+
+    return service;
+
+    ///////
+
+    function show(){
+        service.isShowing = true;
+    };
+    function hide(){
+        service.isShowing = false;
+    };
+    function toggle(){
+        service.isShowing = !service.isShowing;
+    };
+    function status(){
+        return service.isShowing;
+    };
+}
+
+ViewConfig.$inject = ["$templateCache"];angular
     .module('da-loader')
     .run(ViewConfig);
 
 function ViewConfig($templateCache){
     $templateCache.put('id-loader/loader.html', '<div id="loading" ng-style="{\'display\': displayStatus()}"></div>');
-}
-})();
+}})();
