@@ -1,7 +1,7 @@
 
 angular
     .module('da-loader')
-    .directive(LoaderDirective);
+    .directive('daLoader', LoaderDirective);
 
 /* @ngInject */
 function LoaderDirective($rootScope, LoaderService){

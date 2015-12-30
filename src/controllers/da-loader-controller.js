@@ -1,4 +1,3 @@
-
 angular
     .module('da-loader')
     .controller('daLoaderController', DaLoaderController);

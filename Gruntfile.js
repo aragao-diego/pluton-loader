@@ -131,11 +131,11 @@ module.exports = function(grunt) {
 
     concat: {
       options: {
-        banner: '(function(){',
-        footer: '})();'
+        banner: '(function(){\n\'use strict\'\n',
+        footer: '\n})();'
       },
       dist: {
-        src: ['<%= yeoman.temp %>/**/*.js', '<%= yeoman.temp %>/**/*.html'],
+        src: ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js', '<%= yeoman.temp %>/*/*.html'],
         dest: '<%= yeoman.dist %>/da-loader.js',
       },
     },
@@ -157,12 +157,12 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         mangle: false,
-        banner: '(function(){',
-        footer: '})();'
+        banner: '(function(){\n\'use strict\'\n',
+        footer: '\n})();'
       },
       dist: {
         files: {
-          '<%= yeoman.dist %>/da-loader.min.js': ['<%= yeoman.temp %>/**/*.js', '<%= yeoman.temp %>/**/*.html']
+          '<%= yeoman.dist %>/da-loader.min.js': ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js', '<%= yeoman.temp %>/*/*.html']
         }
       }
     },
@@ -206,6 +206,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build',[
+    'test',
     'copy:dist',
     'ngAnnotate:dist',
     'concat:dist',
