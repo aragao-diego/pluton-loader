@@ -8,7 +8,7 @@ angular
     .module('da-loader', ['ui.router'].concat(subModules) );
 
 
-var version = '0.0.24';
+var version = '0.0.33';
 
 
 function createSubModules(element, index, array){
