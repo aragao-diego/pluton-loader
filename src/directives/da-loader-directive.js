@@ -21,7 +21,7 @@ function LoaderDirective($rootScope, LoaderService){
         link: function($scope, element, attrs, controller) {
 
             $scope.displayStatus = function(){
-                return LoaderService.isShowing ? 'block' : 'none';
+                return LoaderService.status() ? 'block' : 'none';
             }
 
 

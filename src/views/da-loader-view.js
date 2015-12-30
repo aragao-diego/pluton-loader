@@ -1,4 +1,3 @@
-
 angular
     .module('da-loader')
     .run(ViewConfig);

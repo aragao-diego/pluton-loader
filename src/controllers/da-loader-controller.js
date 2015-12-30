@@ -3,8 +3,7 @@ angular
     .module('da-loader')
     .controller('daLoaderController', DaLoaderController);
 
-DaLoaderController.$injector = ['$scope'];
-
-function DaLoaderController(){
+/* @ngInject */
+function DaLoaderController($scope){
 
 }

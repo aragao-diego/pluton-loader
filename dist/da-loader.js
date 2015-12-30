@@ -8,9 +8,13 @@ angular
 function DaLoaderController($scope){
 
 }
+<<<<<<< HEAD
 
 var subModules = ['controllers', 'directives', 'services', 'views'];
 subModules.forEach(createSubModules);
+=======
+
+>>>>>>> branch 'master' of ssh://git@gitlab.apoio.fsw.ctis.com.br:10022/dit-angular/da-loader.git
 
 
 angular
@@ -18,6 +22,7 @@ angular
 
 
 var version = '0.0.24';
+<<<<<<< HEAD
 
 
 function createSubModules(element, index, array){
@@ -25,6 +30,9 @@ function createSubModules(element, index, array){
     angular.module(moduleName, []);
     array[index] = moduleName;
 };
+=======
+
+>>>>>>> branch 'master' of ssh://git@gitlab.apoio.fsw.ctis.com.br:10022/dit-angular/da-loader.git
 
 LoaderDirective.$inject = ["$rootScope", "LoaderService"];
 angular
