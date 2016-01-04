@@ -1,15 +1,15 @@
 angular
     .module('da-loader')
-    .config(configDaLoader);
+    .config(configLoader);
 
 /* @ngInject */
-function configDaLoader($ocLazyLoadProvider){
+function configLoader($ocLazyLoadProvider){
     $ocLazyLoadProvider.config({
         modules: [{
             name: 'da-loader',
             files: [
                 'bower_components/da-loader/dist/da-loader.html',
-                'bower_components/da-loader/dist/da-loader.css'
+                
             ]
         }]
     });
