@@ -135,7 +135,7 @@ module.exports = function(grunt) {
         footer: '\n})();'
       },
       dist: {
-        src: ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js', '<%= yeoman.temp %>/*/*.html'],
+        src: ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js'],
         dest: '<%= yeoman.dist %>/da-loader.js',
       },
     },
@@ -162,13 +162,13 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          '<%= yeoman.dist %>/da-loader.min.js': ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js', '<%= yeoman.temp %>/*/*.html']
+          '<%= yeoman.dist %>/da-loader.min.js': ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js']
         }
       }
     },
 
     clean: {
-      dist: ["<%= yeoman.temp %>/"]
+      temp: ["<%= yeoman.temp %>/"]
     },
 
     bump: {
@@ -212,7 +212,7 @@ module.exports = function(grunt) {
     'concat:dist',
     'htmlmin:dist',
     'uglify:dist',
-    //'clean:dist'
+    'clean:temp'
   ]);
 
   grunt.registerTask('default', [

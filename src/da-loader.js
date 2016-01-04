@@ -4,11 +4,7 @@ subModules.forEach(createSubModules);
 var module = 'da-loader';
 
 angular
-    .module(module, ['ui.router'].concat(subModules) );
-
-
-var version = '0.0.94';
-
+    .module(module, ['ui.router', 'oc.lazyLoad'].concat(subModules) );
 
 function createSubModules(element, index, array){
     var moduleName = module+element;
