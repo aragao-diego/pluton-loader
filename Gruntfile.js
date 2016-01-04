@@ -62,7 +62,7 @@ module.exports = function(grunt) {
           dot: true,
           cwd: '<%= yeoman.temp %>',
           dest: '<%= yeoman.dist %>',
-          src: [ '*.html'.]
+          src: [ '*.html']
         }]
       }
     },
@@ -148,10 +148,18 @@ module.exports = function(grunt) {
         dest: '<%= yeoman.dist %>/da-loader.js'
       },
       assets: {
+        options:{
+          banner: '',
+          footer: ''
+        },
         src: ['<%= yeoman.temp %>/**/*.css'],
         dest: '<%= yeoman.dist %>/da-loader.css'
       },
       views: {
+        options:{
+          banner: '',
+          footer: ''
+        },
         src: ['<%= yeoman.temp %>/**/*.html'],
         dest: '<%= yeoman.dist %>/da-loader.html'
       }
