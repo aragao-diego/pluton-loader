@@ -1,5 +1,5 @@
 angular
-    .module('da-loader')
+    .module('da-loader.services')
     .service('LoaderService', LoaderService );
 
 /* @ngInject */

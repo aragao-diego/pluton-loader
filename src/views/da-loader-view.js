@@ -1,5 +1,5 @@
 angular
-    .module('da-loader')
+    .module('da-loader.views')
     .run(viewConfig);
     
 /* @ngInject */

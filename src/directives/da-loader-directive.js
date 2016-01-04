@@ -1,6 +1,6 @@
 
 angular
-    .module('da-loader')
+    .module('da-loader.directives')
     .directive('daLoader', LoaderDirective);
 
 /* @ngInject */
