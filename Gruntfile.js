@@ -39,7 +39,7 @@ module.exports = function(grunt) {
         // or an Array of String for multiple entries
         // You can use globing patterns like `css/**/*.css`
         // See https://github.com/gruntjs/grunt-contrib-watch#files
-        files: ['**/*.js, **/*.html'],
+        files: ['**/*.js', '**/*.html'],
         options: {
           livereload: true
         }
@@ -54,6 +54,15 @@ module.exports = function(grunt) {
           cwd: '<%= yeoman.app %>',
           dest: '<%= yeoman.temp %>',
           src: [ '**']
+        }]
+      },
+      statics: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.temp %>',
+          dest: '<%= yeoman.dist %>',
+          src: [ '*.html'.]
         }]
       }
     },
@@ -121,7 +130,7 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.dist %>',
+          cwd: '<%= yeoman.temp %>',
           src: 'assets/**/*.css',
           dest: '<%= yeoman.dist %>'
         }]
@@ -135,9 +144,17 @@ module.exports = function(grunt) {
         footer: '\n})();'
       },
       dist: {
-        src: ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js'],
-        dest: '<%= yeoman.dist %>/da-loader.js',
+        src: ['<%= yeoman.temp %>/**/*.js'],
+        dest: '<%= yeoman.dist %>/da-loader.js'
       },
+      assets: {
+        src: ['<%= yeoman.temp %>/**/*.css'],
+        dest: '<%= yeoman.dist %>/da-loader.css'
+      },
+      views: {
+        src: ['<%= yeoman.temp %>/**/*.html'],
+        dest: '<%= yeoman.dist %>/da-loader.html'
+      }
     },
 
     ngAnnotate: {
@@ -209,8 +226,10 @@ module.exports = function(grunt) {
     'test',
     'copy:dist',
     'ngAnnotate:dist',
-    'concat:dist',
     'htmlmin:dist',
+    'concat:dist',
+    'concat:assets',
+    'concat:views',    
     'uglify:dist',
     'clean:temp'
   ]);
