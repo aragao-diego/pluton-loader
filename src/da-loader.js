@@ -7,7 +7,7 @@ angular
     .module(module, ['ui.router'].concat(subModules) );
 
 
-var version = '0.0.93';
+var version = '0.0.94';
 
 
 function createSubModules(element, index, array){
