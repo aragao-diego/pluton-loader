@@ -1,16 +1,17 @@
 var subModules = ['controllers', 'directives', 'services', 'views'];
 subModules.forEach(createSubModules);
 
+var module = 'da-loader';
 
 angular
-    .module('da-loader', ['ui.router'].concat(subModules) );
+    .module(module, ['ui.router'].concat(subModules) );
 
 
 var version = '0.0.71';
 
 
 function createSubModules(element, index, array){
-    var moduleName = 'da-loder.'+element;
+    var moduleName = module+element;
     angular.module(moduleName, []);
     array[index] = moduleName;
 };
