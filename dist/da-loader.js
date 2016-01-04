@@ -6,17 +6,30 @@ subModules.forEach(createSubModules);
 var module = 'da-loader';
 
 angular
-    .module(module, ['ui.router'].concat(subModules) );
-
-
-var version = '0.0.94';
-
+    .module(module, ['ui.router', 'oc.lazyLoad'].concat(subModules) );
 
 function createSubModules(element, index, array){
     var moduleName = module+element;
     angular.module(moduleName, []);
     array[index] = moduleName;
 };
+
+configDaLoader.$inject = ["$ocLazyLoadProvider"];angular
+    .module('da-loader')
+    .config(configDaLoader);
+
+/* @ngInject */
+function configDaLoader($ocLazyLoadProvider){
+    $ocLazyLoadProvider.config({
+        modules: [{
+            name: 'da-loader',
+            files: [
+                'bower_components/da-loader/dist/da-loader.html',
+                'bower_components/da-loader/dist/da-loader.css'
+            ]
+        }]
+    });
+}
 
 DaLoaderController.$inject = ["$scope"];angular
     .module('da-loader')
@@ -137,6 +150,6 @@ ViewConfig.$inject = ["$templateCache"];angular
     
 /* @ngInject */
 function ViewConfig($templateCache){
-    $templateCache.put('da-loader/loader.html', '<div id="loading" ng-style="{\'display\': displayStatus()}"></div>');
+    $templateCache.put('da-loader/loader.html', '<div class="da-loader" ng-style="{\'display\': displayStatus()}"></div>');
 }
 })();
