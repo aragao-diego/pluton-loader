@@ -144,12 +144,12 @@ function LoaderService($state){
     };
 }
 
-ViewConfig.$inject = ["$templateCache"];angular
+viewConfig.$inject = ["$templateCache"];angular
     .module('da-loader')
-    .run(ViewConfig);
+    .run(viewConfig);
     
 /* @ngInject */
-function ViewConfig($templateCache){
+function viewConfig($templateCache){
     $templateCache.put('da-loader/loader.html', '<div class="da-loader" ng-style="{\'display\': displayStatus()}"></div>');
 }
 })();
