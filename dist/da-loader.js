@@ -1,17 +1,17 @@
 (function(){
 'use strict'
+var moduleName = 'da-loader';
+
 var subModules = ['controllers', 'directives', 'services', 'views'];
 subModules.forEach(createSubModules);
 
-var module = 'da-loader';
-
 angular
-    .module(module, ['ui.router', 'oc.lazyLoad'].concat(subModules) );
+    .module(moduleName, ['ui.router', 'oc.lazyLoad'].concat(subModules) );
 
 function createSubModules(element, index, array){
-    var moduleName = module+element;
-    angular.module(moduleName, []);
-    array[index] = moduleName;
+    var subModuleName = moduleName+'.'+element;
+    angular.module(subModuleName, []);    
+    array[index] = subModuleName;
 };
 
 configDaLoader.$inject = ["$ocLazyLoadProvider"];angular
@@ -32,7 +32,7 @@ function configDaLoader($ocLazyLoadProvider){
 }
 
 DaLoaderController.$inject = ["$scope"];angular
-    .module('da-loader')
+    .module('da-loader.controllers')
     .controller('daLoaderController', DaLoaderController);
 
 /* @ngInject */
@@ -43,7 +43,7 @@ function DaLoaderController($scope){
 
 LoaderDirective.$inject = ["$rootScope", "LoaderService"];
 angular
-    .module('da-loader')
+    .module('da-loader.directives')
     .directive('daLoader', LoaderDirective);
 
 /* @ngInject */
@@ -108,7 +108,7 @@ function LoaderDirective($rootScope, LoaderService){
 
 
 LoaderService.$inject = ["$state"];angular
-    .module('da-loader')
+    .module('da-loader.services')
     .service('LoaderService', LoaderService );
 
 /* @ngInject */
@@ -145,7 +145,7 @@ function LoaderService($state){
 }
 
 viewConfig.$inject = ["$templateCache"];angular
-    .module('da-loader')
+    .module('da-loader.views')
     .run(viewConfig);
     
 /* @ngInject */
