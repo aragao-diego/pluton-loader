@@ -6,7 +6,8 @@ module.exports = function(grunt) {
   var appConfig = {
     app: require('./bower.json').appPath || 'src',
     dist: 'dist',
-    temp: 'tmp'
+    temp: 'tmp',
+    module: 'da-loader'
   };
 
   // Configure Grunt 
@@ -145,7 +146,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js'],
-        dest: '<%= yeoman.dist %>/da-loader.js'
+        dest: '<%= yeoman.dist %>/<%= yeoman.module %>.js'
       },
       assets: {
         options:{
@@ -153,7 +154,7 @@ module.exports = function(grunt) {
           footer: ''
         },
         src: ['<%= yeoman.temp %>/**/*.css'],
-        dest: '<%= yeoman.dist %>/da-loader.css'
+        dest: '<%= yeoman.dist %>/<%= yeoman.module %>.css'
       },
       views: {
         options:{
@@ -161,7 +162,7 @@ module.exports = function(grunt) {
           footer: ''
         },
         src: ['<%= yeoman.temp %>/**/*.html'],
-        dest: '<%= yeoman.dist %>/da-loader.html'
+        dest: '<%= yeoman.dist %>/<%= yeoman.module %>.html'
       }
     },
 
@@ -187,7 +188,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          '<%= yeoman.dist %>/da-loader.min.js': ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js']
+          '<%= yeoman.dist %>/<%= yeoman.module %>.min.js': ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js']
         }
       }
     },
