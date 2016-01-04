@@ -144,7 +144,7 @@ module.exports = function(grunt) {
         footer: '\n})();'
       },
       dist: {
-        src: ['<%= yeoman.temp %>/**/*.js'],
+        src: ['<%= yeoman.temp %>/*.js', '<%= yeoman.temp %>/*/*.js'],
         dest: '<%= yeoman.dist %>/da-loader.js'
       },
       assets: {
