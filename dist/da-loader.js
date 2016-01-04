@@ -150,6 +150,6 @@ viewConfig.$inject = ["$templateCache"];angular
     
 /* @ngInject */
 function viewConfig($templateCache){
-    $templateCache.put('da-loader/loader.html', '<div class="da-loader" ng-style="{\'display\': displayStatus()}"></div>');
+    //$templateCache.put('da-loader/loader.html', '<div class="da-loader" ng-style="{\'display\': displayStatus()}"></div>');
 }
 })();
