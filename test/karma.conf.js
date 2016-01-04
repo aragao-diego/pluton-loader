@@ -10,10 +10,11 @@ module.exports = function(config){
 
         'bower_components/angular-mocks/angular-mocks.js',
 
-        { pattern: 'src/*.js', watched: true, included: true, served: true},
+        { pattern: 'src/*.*js', watched: true, included: true, served: true},
         { pattern: 'src/**/*.js', watched: true, included: true, served: true},
         
         { pattern: 'test/spec/**/*.js', watched: true, included: true, served: true},
+        
     ],
 
     autoWatch : true,
