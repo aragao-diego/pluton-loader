@@ -20,18 +20,13 @@ function LoaderDirective($rootScope, LoaderService){
         // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
         link: function($scope, element, attrs, controller) {
 
-            var status = '';
-
-
-            $scope.displayStatus = function(){
-                return status;
-            }
+            $scope.displayStatus = LoaderService.status() ? 'block' : 'none';            
 
             $scope.$watch(function(){
-                LoaderService.status()
-            }, function(newValue, oldValue, scope) {
-                status = LoaderService.status() ? 'block' : 'none'
-            }, objectEquality);
+                return LoaderService.status();
+            }, function(newValue){
+                $scope.displayStatus = LoaderService.status() ? 'block' : 'none';
+            })
 
 
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
