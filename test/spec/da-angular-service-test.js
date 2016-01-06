@@ -1,0 +1,142 @@
+describe('Serviço do loader', function() {
+    'use strict';
+
+    var LoaderService;
+    var $rootScope;
+    var $state;
+    var $templateCache;
+    var stateProvider;
+    var $timeout;
+    var $compile;
+    var directive;
+    var $scope;
+    var _states = {
+        'app': {
+            url: '/app',                
+            resolve: {
+                
+            }
+        },
+        'app.tela1': {
+            url: '/tela1',                
+            resolve: {
+
+
+            }
+        },
+        'app.tela2': {
+            url: '/tela2',                
+            resolve: {
+
+
+            }
+        }
+    };
+
+    beforeEach( function(){
+        module('ui.router');
+        module('oc.lazyLoad')
+        module('da-loader.services');   
+        module('da-loader.directives');
+    });
+
+    beforeEach( module(function($stateProvider, $provide, $urlRouterProvider){
+        stateProvider = $stateProvider; 
+        //$urlRouterProvider.deferIntercept();
+
+        angular.forEach(_states, function(stateConfig, stateName){
+            stateProvider.state(stateName,stateConfig);
+        }); 
+    }));
+
+    beforeEach( inject(function(_$state_, _$rootScope_, _LoaderService_, _$timeout_, _$compile_, _$templateCache_){
+        $state = _$state_;
+        $rootScope = _$rootScope_;
+        LoaderService = _LoaderService_;
+        $timeout = _$timeout_;
+        $compile = _$compile_;
+        $templateCache = _$templateCache_;
+
+        $templateCache.put('da-loader/loader.html','<div class="da-loader">loading</div>');
+        
+    }));
+
+    describe('Métodos e propriedades', function(){
+        it('Que tenha função enable', function(){
+            expect(LoaderService).toHaveMethod('enable');
+        });
+        it('Que tenha função disable', function(){
+            expect(LoaderService).toHaveMethod('disable');
+        });
+        it('Que tenha função toggle', function(){
+            expect(LoaderService).toHaveMethod('toggle');
+        });
+        it('Que tenha função isActive', function(){
+            expect(LoaderService).toHaveMethod('isActive');
+        });
+    });
+
+    describe('Configurações iniciais do serviço', function(){
+        it('Inicialmente, estado de carregamento é falso', function(){
+            expect(LoaderService.isActive()).toBe(false);
+        });
+        it('Exibindo o loader com o enable', function(){
+            LoaderService.enable();
+            expect(LoaderService.isActive()).toBeTruthy();
+        });
+        it('Removendo exibição o loader com o disable', function(){
+            LoaderService.disable();
+            expect(LoaderService.isActive()).toBeFalse();
+        });
+        it('Exibindo o loader com o toggle', function(){
+            LoaderService.disable();
+            LoaderService.toggle();
+            expect(LoaderService.isActive()).toBeTruthy();
+        });
+        it('Removendo a exibição o loader com o toggle', function(){
+            LoaderService.enable();
+            LoaderService.toggle();
+            expect(LoaderService.isActive()).toBeFalse();
+        });
+    });
+
+    describe('Eventos de mudança de states', function(){  
+        it('$state inicial ser app',function(){  
+            $state.transitionTo('app', {}, {});
+            $rootScope.$digest(); 
+
+            expect($state.current.name).toBe('app');
+        });
+
+
+        it('Deve chamar enable e disabled quando mudar para um state', function(){
+            spyOn(LoaderService,"enable");
+            directive = compiledDirective(); 
+            
+            
+            $state.transitionTo('app.tela1', {}, {});
+            $rootScope.$digest(); 
+            //$rootScope.$broadcast('$stateChangeStart', {});
+            //$rootScope.$digest();
+
+
+
+
+            expect($state.current.name).toBe('app.tela1');
+
+            //expect(LoaderService.enable).toHaveBeenCalled();
+        });
+    });
+
+
+
+    function compiledDirective(){
+        $scope = $rootScope.$new();
+
+        var element = angular.element('<da-loader></da-loader>');
+        var compiledElement = $compile(element)($scope);
+
+        $rootScope.$digest();
+        return compiledElement;
+    }
+})
