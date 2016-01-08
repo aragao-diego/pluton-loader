@@ -64,7 +64,6 @@ describe('Diretiva do loader', function() {
             $scope = $rootScope.$new();
             $scope.info = '';
             $scope.loaded = false;
-
         });
 
         it('Conteúdo da diretiva deve ser o esperado de acordo com o template informado',function(){
@@ -90,20 +89,9 @@ describe('Diretiva do loader', function() {
             expect(directive.scope().hooks).toBeArray();
             expect(directive.scope().hooks.length).toBe(2);
         });
-
-        it('Detecta que o controlador inserido como hook não implementa o contrato', function(){
-            $templateCache.put('da-loader/loader.html','<div class="da-loader"></div>');
-            directive = compiledDirective('[\'TestBadController\']');
-
-
-        });
     });
 
-
-
     function compiledDirective(hooks){
-        //$scope = $rootScope.$new();
-
         var element = angular.element('<da-loader hooks="'+hooks+'"></da-loader>');
         var compiledElement = $compile(element)($scope);
 

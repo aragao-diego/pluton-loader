@@ -3,18 +3,14 @@ angular
     .controller('DALoaderController', DALoaderController);
 
 /*@ngInject*/
-function DALoaderController($controller, $scope){
+function DALoaderController($scope, $controller, $rootScope){
+    var vm = this;
     var onDestroy;
 
-    var vm = {
-        hooks: [],
-
-        setUp: setUp,
-        tearDown: tearDown
-    };
-
-
-    return vm;
+    vm.setUp = setUp;
+    vm.tearDown = tearDown;
+    vm.createHooks = createHooks;
+    vm.hooks = [];
 
     ///////////////
     function verifyHook(hook){
@@ -26,8 +22,7 @@ function DALoaderController($controller, $scope){
 
     function createHooks(){
         angular.forEach($scope.hooks, function(nomeControlador, index){
-            var controlador = $controller(nomeControlador);
-
+            var controlador = $controller(nomeControlador, {'$scope': $rootScope.$new()});
             if(!verifyHook(controlador)){
                 throw new Error("O controlador "+ nomeControlador +" não implementa as funções esperadas(setUp,tearDown)");
             }

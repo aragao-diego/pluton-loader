@@ -4,19 +4,16 @@ angular
 
 /* @ngInject */
 function LoaderUiRouterController($scope, $rootScope, LoaderService){
+    var vm = this;
 
     var onStart;
     var onError;
     var onSuccess;
     var onNotFound;
-    var onDestroy;   
+    var onDestroy;
 
-    var vm = {
-        setUp: setUp,
-        tearDown: tearDown
-    };
-
-    return vm;
+    vm.setUp = setUp;
+    vm.tearDown = tearDown;
 
     ///////////
     function setUp(){
@@ -40,7 +37,7 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
             console.log("Tear down");
             tearDown();
         });
-    };  
+    }
 
     function tearDown(){
         onStart();
@@ -48,5 +45,5 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
         onSuccess();
         onNotFound();
         onDestroy();
-    };
+    }
 }

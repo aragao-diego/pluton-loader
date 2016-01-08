@@ -12,20 +12,20 @@ describe('Serviço do loader', function() {
     var $scope;
     var _states = {
         'app': {
-            url: '/app',                
+            url: '/app',
             resolve: {
-                
+
             }
         },
         'app.tela1': {
-            url: '/tela1',                
+            url: '/tela1',
             resolve: {
 
 
             }
         },
         'app.tela2': {
-            url: '/tela2',                
+            url: '/tela2',
             resolve: {
 
 
@@ -35,18 +35,17 @@ describe('Serviço do loader', function() {
 
     beforeEach( function(){
         module('ui.router');
-        module('oc.lazyLoad')
-        module('da-loader.services');   
+        module('oc.lazyLoad');
+        module('da-loader.services');
         module('da-loader.directives');
     });
 
-    beforeEach( module(function($stateProvider, $provide, $urlRouterProvider){
-        stateProvider = $stateProvider; 
-        //$urlRouterProvider.deferIntercept();
+    beforeEach( module(function($stateProvider){
+        stateProvider = $stateProvider;
 
         angular.forEach(_states, function(stateConfig, stateName){
             stateProvider.state(stateName,stateConfig);
-        }); 
+        });
     }));
 
     beforeEach( inject(function(_$state_, _$rootScope_, _LoaderService_, _$timeout_, _$compile_, _$templateCache_){
@@ -58,7 +57,7 @@ describe('Serviço do loader', function() {
         $templateCache = _$templateCache_;
 
         $templateCache.put('da-loader/loader.html','<div class="da-loader">loading</div>');
-        
+
     }));
 
     describe('Métodos e propriedades', function(){
@@ -99,4 +98,4 @@ describe('Serviço do loader', function() {
             expect(LoaderService.isActive()).toBeFalse();
         });
     });
-})
+});
