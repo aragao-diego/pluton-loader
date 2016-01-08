@@ -7,8 +7,7 @@ angular
 function LoaderDirective($rootScope, LoaderService){
     return {
         scope: {}, // {} = isolate, true = child, false/undefined = no change
-        controller: "@",
-        name: "controller",
+        controller: "DALoaderController",
         restrict: 'AE',
         templateUrl: 'da-loader/loader.html',
         replace: true,
@@ -20,24 +19,24 @@ function LoaderDirective($rootScope, LoaderService){
         return {
             pre: preLink,
             post: postLink
-        }            
-    };
+        };
+    }
 
     function preLink($scope, element, attrs, controller) {
-        if( !attrs.controller ){
-            attrs.controller = "LoaderUiRouterController";
+        if(!attrs.hooks){
+            attrs.hooks = ["LoaderUiRouterController"];
         }
-    };
+
+        if(!Array.isArray(attrs.hooks)){
+            attrs.hooks = [attrs.hooks];
+        }
+
+        $scope.hooks = attrs.hooks;
+        delete attrs.hooks;
+    }
 
     function postLink($scope, element, attrs, controller) {
+        console.log(controller);
         controller.setUp();
-
-        $scope.displayStatus = LoaderService.isActive() ? 'block' : 'none';            
-
-        $scope.$watch(function(){
-            return LoaderService.isActive();
-        }, function(newValue){
-            $scope.displayStatus = LoaderService.isActive() ? 'block' : 'none';
-        });        
-    };
-};
+    }
+}
