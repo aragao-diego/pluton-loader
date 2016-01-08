@@ -10,6 +10,7 @@ function LoaderService($state){
 
     var service = {
         isShowing: isShowing,
+
         enable: enable,
         disable: disable,
         toggle: toggle,
@@ -19,7 +20,6 @@ function LoaderService($state){
     return service;
 
     ///////
-
     function enable(){
         service.isShowing = true;
     };

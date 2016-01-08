@@ -33,15 +33,75 @@ function configLoader($ocLazyLoadProvider){
     });
 }
 
-DaLoaderController.$inject = ["$scope"];angular
+LoaderController.$inject = ["$controller"];angular
     .module('da-loader.controllers')
-    .controller('daLoaderController', DaLoaderController);
+    .controller('LoaderController', LoaderController);
 
-/* @ngInject */
-function DaLoaderController($scope){
-
+/*@ngInject*/
+function LoaderController($controller){
+    
 }
 
+LoaderUiRouterController.$inject = ["$rootScope", "LoaderService"];angular
+    .module('da-loader.controllers')
+    .controller('LoaderNgRouterController', LoaderUiRouterController);
+
+/* @ngInject */
+function LoaderUiRouterController($rootScope, LoaderService){
+    var vm = this;
+
+    return vm;
+
+    $rootScope.$on('$routeChangeStart', function(event, toState, toParams, fromState, fromParams){
+        LoaderService.enable();
+    });
+
+    $rootScope.$on('$routeChangeError', function(event, toState, toParams, fromState, fromParams, error){
+        LoaderService.disable();
+    });
+
+    $rootScope.$on('$routeChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+        LoaderService.disable();
+    });
+
+    $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
+        LoaderService.disable();
+    });
+}
+
+LoaderUiRouterController.$inject = ["$rootScope", "LoaderService"];angular
+    .module('da-loader.controllers')
+    .controller('LoaderUiRouterController', LoaderUiRouterController);
+
+/* @ngInject */
+function LoaderUiRouterController($rootScope, LoaderService){
+    var vm = {
+        config: config
+
+
+    };
+
+    return vm;
+
+
+    function config(){
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+            LoaderService.enable();
+        });
+
+        $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+            LoaderService.disable();
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+            LoaderService.disable();
+        });
+
+        $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
+            LoaderService.disable();
+        });
+    };    
+}
 
 LoaderDirective.$inject = ["$rootScope", "LoaderService"];
 angular
@@ -51,67 +111,39 @@ angular
 /* @ngInject */
 function LoaderDirective($rootScope, LoaderService){
     return {
-        // name: '',
-        // priority: 1,
-        // terminal: true,
-        // scope: {}, // {} = isolate, true = child, false/undefined = no change
-        // controller: function($scope, $element, $attrs, $transclude) {},
-        // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+        scope: {}, // {} = isolate, true = child, false/undefined = no change
+        controller: "@",
+        name: "controller",
         restrict: 'AE',
-        // template: '',
         templateUrl: 'da-loader/loader.html',
         replace: true,
-        // transclude: true,
-        // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-        link: function($scope, element, attrs, controller) {
+        compile: compile
+    };
 
-            $scope.displayStatus = LoaderService.status() ? 'block' : 'none';            
+    ////////////////
+    function compile(element, attrs, transclude){
+        return {
+            pre: preLink,
+            post: postLink
+        }            
+    };
 
-            $scope.$watch(function(){
-                return LoaderService.status();
-            }, function(newValue){
-                $scope.displayStatus = LoaderService.status() ? 'block' : 'none';
-            })
-
-
-            $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-                LoaderService.show();
-                //event.preventDefault();
-                // transitionTo() promise will be rejected with
-                // a 'transition prevented' error
-                console.log('$stateChangeStart');
-            });
-
-
-            $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
-                LoaderService.hide();
-                //event.preventDefault();
-                // transitionTo() promise will be rejected with
-                // a 'transition prevented' error
-                console.log('$stateChangeError');
-            });
-
-
-            $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-                LoaderService.hide();
-                //event.preventDefault();
-                // transitionTo() promise will be rejected with
-                // a 'transition prevented' error
-                console.log('$stateChangeSuccess');
-            });
-
-
-            $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
-                LoaderService.hide();
-                //event.preventDefault();
-                // transitionTo() promise will be rejected with
-                // a 'transition prevented' error
-                console.log('$stateNotFound');
-            });
+    function preLink($scope, element, attrs, controller) {
+        if( !attrs.controller ){
+            attrs.controller = "LoaderUiRouterController";
         }
     };
-}
 
+    function postLink($scope, element, attrs, controller) {
+        $scope.displayStatus = LoaderService.isActive() ? 'block' : 'none';            
+
+        $scope.$watch(function(){
+            return LoaderService.isActive();
+        }, function(newValue){
+            $scope.displayStatus = LoaderService.isActive() ? 'block' : 'none';
+        });        
+    };
+};
 
 LoaderService.$inject = ["$state"];angular
     .module('da-loader.services')
@@ -126,26 +158,25 @@ function LoaderService($state){
     var service = {
         isShowing: isShowing,
 
-        show: show,
-        hide: hide,
+        enable: enable,
+        disable: disable,
         toggle: toggle,
-        status: status
+        isActive: isActive
     };
 
     return service;
 
     ///////
-
-    function show(){
+    function enable(){
         service.isShowing = true;
     };
-    function hide(){
+    function disable(){
         service.isShowing = false;
     };
     function toggle(){
         service.isShowing = !service.isShowing;
     };
-    function status(){
+    function isActive(){
         return service.isShowing;
     };
 }

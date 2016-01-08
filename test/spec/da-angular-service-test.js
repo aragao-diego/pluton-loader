@@ -99,44 +99,4 @@ describe('Serviço do loader', function() {
             expect(LoaderService.isActive()).toBeFalse();
         });
     });
-
-    describe('Eventos de mudança de states', function(){  
-        it('$state inicial ser app',function(){  
-            $state.transitionTo('app', {}, {});
-            $rootScope.$digest(); 
-
-            expect($state.current.name).toBe('app');
-        });
-
-
-        it('Deve chamar enable e disabled quando mudar para um state', function(){
-            spyOn(LoaderService,"enable");
-            directive = compiledDirective(); 
-            
-            
-            $state.transitionTo('app.tela1', {}, {});
-            $rootScope.$digest(); 
-            //$rootScope.$broadcast('$stateChangeStart', {});
-            //$rootScope.$digest();
-
-
-
-
-            expect($state.current.name).toBe('app.tela1');
-
-            //expect(LoaderService.enable).toHaveBeenCalled();
-        });
-    });
-
-
-
-    function compiledDirective(){
-        $scope = $rootScope.$new();
-
-        var element = angular.element('<da-loader></da-loader>');
-        var compiledElement = $compile(element)($scope);
-
-        $rootScope.$digest();
-        return compiledElement;
-    }
 })

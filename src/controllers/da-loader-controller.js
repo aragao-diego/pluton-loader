@@ -1,8 +1,8 @@
 angular
     .module('da-loader.controllers')
-    .controller('daLoaderController', DaLoaderController);
+    .controller('LoaderController', LoaderController);
 
-/* @ngInject */
-function DaLoaderController($scope){
-
+/*@ngInject*/
+function LoaderController($controller){
+    
 }
