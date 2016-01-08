@@ -4,6 +4,8 @@ angular
 
 /*@ngInject*/
 function DALoaderController($controller, $scope){
+    var onDestroy;
+
     var vm = {
         hooks: [],
 
@@ -31,26 +33,28 @@ function DALoaderController($controller, $scope){
             }
 
             vm.hooks.push(controlador);
-        })
-    };
+        });
+    }
 
     function setUpHooks(){
         angular.forEach(vm.hooks, function(controlador, index){
             controlador.setUp();
-        })
-    };
+        });
+    }
 
     function tearDownHooks(){
         angular.forEach(vm.hooks, function(controlador, index){
             controlador.tearDown();
-        })
-    };
+        });
+    }
 
     function setUp(){
+        onDestroy = $scope.$watch('$destroy',tearDown);
         return setUpHooks();
     }
 
     function tearDown(){
+        onDestroy();
         return tearDownHooks();
     }
 }

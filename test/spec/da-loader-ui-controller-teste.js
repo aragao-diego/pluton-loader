@@ -10,8 +10,8 @@ describe('Controlador implementando os recursos do UI ROUTER', function() {
     beforeEach( function(){
         module('ui.router');
         module('oc.lazyLoad');
-        module('da-loader.services');   
-        module('da-loader.controllers');   
+        module('da-loader.services');
+        module('da-loader.controllers');
     });
 
     beforeEach( inject(function(_$rootScope_, _$controller_, _LoaderService_){
@@ -28,10 +28,10 @@ describe('Controlador implementando os recursos do UI ROUTER', function() {
     describe('Propriedades do escopo do controlador', function(){
         it('Ter o método setUp', function(){
             expect(controlador).toHaveMethod('setUp');
-        });   
+        });
         it('Ter o método tearDown', function(){
             expect(controlador).toHaveMethod('tearDown');
-        });      
+        });
     });
 
     describe('Registra os e responde aos eventos esperados depois da função setUp', function(){
@@ -39,7 +39,7 @@ describe('Controlador implementando os recursos do UI ROUTER', function() {
             controlador.setUp();
         });
 
-        it('Escuta o evento $stateChangeStart', function(){            
+        it('Escuta o evento $stateChangeStart', function(){
             spyOn(LoaderService,'enable').and.callThrough();
 
             $rootScope.$broadcast('$stateChangeStart', {});
@@ -82,7 +82,7 @@ describe('Controlador implementando os recursos do UI ROUTER', function() {
             controlador.tearDown();
         });
 
-        it('Não escuta o evento $stateChangeStart', function(){            
+        it('Não escuta o evento $stateChangeStart', function(){
             spyOn(LoaderService,'enable').and.callThrough();
 
             $rootScope.$broadcast('$stateChangeStart', {});
@@ -118,4 +118,4 @@ describe('Controlador implementando os recursos do UI ROUTER', function() {
             expect(LoaderService.isShowing).toBeFalse();
         });
     });
-})
+});

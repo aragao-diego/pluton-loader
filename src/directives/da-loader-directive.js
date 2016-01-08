@@ -4,9 +4,9 @@ angular
     .directive('daLoader', LoaderDirective);
 
 /* @ngInject */
-function LoaderDirective($rootScope, LoaderService){
+function LoaderDirective($rootScope, LoaderService, $parse){
     return {
-        scope: {}, // {} = isolate, true = child, false/undefined = no change
+        scope: true, // {} = isolate, true = child, false/undefined = no change
         controller: "DALoaderController",
         restrict: 'AE',
         templateUrl: 'da-loader/loader.html',
@@ -24,19 +24,15 @@ function LoaderDirective($rootScope, LoaderService){
 
     function preLink($scope, element, attrs, controller) {
         if(!attrs.hooks){
-            attrs.hooks = ["LoaderUiRouterController"];
+            attrs.hooks = '["LoaderUiRouterController"]';
         }
+        var hooks = $parse(attrs.hooks)($scope);
 
-        if(!Array.isArray(attrs.hooks)){
-            attrs.hooks = [attrs.hooks];
-        }
-
-        $scope.hooks = attrs.hooks;
+        $scope.hooks = hooks;
         delete attrs.hooks;
     }
 
-    function postLink($scope, element, attrs, controller) {
-        console.log(controller);
+    function postLink($scope, element, attrs, controller){
         controller.setUp();
     }
 }
