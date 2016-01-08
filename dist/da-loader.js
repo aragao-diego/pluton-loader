@@ -10,9 +10,10 @@ angular
 
 function createSubModules(element, index, array){
     var subModuleName = moduleName+'.'+element;
-    angular.module(subModuleName, []);    
+    angular.module(subModuleName, []);
     array[index] = subModuleName;
 };
+
 
 configLoader.$inject = ["$ocLazyLoadProvider"];angular
     .module('da-loader')
@@ -26,94 +27,162 @@ function configLoader($ocLazyLoadProvider){
             serie: true,
             files: [
                 'bower_components/da-loader/dist/da-loader.css',
-                'bower_components/da-loader/dist/da-loader.html'
-                
+                'bower_components/da-loader/dist/da-loader.html'                
             ]
         }]
     });
 }
 
-LoaderController.$inject = ["$controller"];angular
+DALoaderController.$inject = ["$scope", "$controller", "$rootScope"];angular
     .module('da-loader.controllers')
-    .controller('LoaderController', LoaderController);
+    .controller('DALoaderController', DALoaderController);
 
 /*@ngInject*/
-function LoaderController($controller){
-    
-}
-
-LoaderUiRouterController.$inject = ["$rootScope", "LoaderService"];angular
-    .module('da-loader.controllers')
-    .controller('LoaderNgRouterController', LoaderUiRouterController);
-
-/* @ngInject */
-function LoaderUiRouterController($rootScope, LoaderService){
+function DALoaderController($scope, $controller, $rootScope){
     var vm = this;
+    var onDestroy;
 
-    return vm;
+    vm.setUp = setUp;
+    vm.tearDown = tearDown;
+    vm.createHooks = createHooks;
+    vm.hooks = [];
 
-    $rootScope.$on('$routeChangeStart', function(event, toState, toParams, fromState, fromParams){
-        LoaderService.enable();
-    });
+    ///////////////
+    function verifyHook(hook){
+        if(!hook.setUp || !hook.tearDown){
+            return false;
+        }
+        return true;
+    }
 
-    $rootScope.$on('$routeChangeError', function(event, toState, toParams, fromState, fromParams, error){
-        LoaderService.disable();
-    });
+    function createHooks(){
+        angular.forEach($scope.hooks, function(nomeControlador, index){
+            var controlador = $controller(nomeControlador, {'$scope': $rootScope.$new()});
+            if(!verifyHook(controlador)){
+                throw new Error("O controlador "+ nomeControlador +" não implementa as funções esperadas(setUp,tearDown)");
+            }
 
-    $rootScope.$on('$routeChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-        LoaderService.disable();
-    });
+            vm.hooks.push(controlador);
+        });
+    }
 
-    $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
-        LoaderService.disable();
-    });
+    function setUpHooks(){
+        angular.forEach(vm.hooks, function(controlador, index){
+            controlador.setUp();
+        });
+    }
+
+    function tearDownHooks(){
+        angular.forEach(vm.hooks, function(controlador, index){
+            controlador.tearDown();
+        });
+    }
+
+    function setUp(){
+        onDestroy = $scope.$watch('$destroy',tearDown);
+        return setUpHooks();
+    }
+
+    function tearDown(){
+        onDestroy();
+        return tearDownHooks();
+    }
 }
 
-LoaderUiRouterController.$inject = ["$rootScope", "LoaderService"];angular
+
+LoaderNgRouterController.$inject = ["$rootScope", "LoaderService"];angular
     .module('da-loader.controllers')
-    .controller('LoaderUiRouterController', LoaderUiRouterController);
+    .controller('LoaderNgRouterController', LoaderNgRouterController);
 
 /* @ngInject */
-function LoaderUiRouterController($rootScope, LoaderService){
+function LoaderNgRouterController($rootScope, LoaderService){
     var vm = {
         config: config
-
-
     };
 
     return vm;
 
-
+    //////////////////////////
     function config(){
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        $rootScope.$on('$routeChangeStart', function(event, toState, toParams, fromState, fromParams){
             LoaderService.enable();
         });
 
-        $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+        $rootScope.$on('$routeChangeError', function(event, toState, toParams, fromState, fromParams, error){
             LoaderService.disable();
         });
 
-        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+        $rootScope.$on('$routeChangeSuccess', function(event, toState, toParams, fromState, fromParams){
             LoaderService.disable();
         });
 
         $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
             LoaderService.disable();
         });
-    };    
+    }    
 }
 
-LoaderDirective.$inject = ["$rootScope", "LoaderService"];
+LoaderUiRouterController.$inject = ["$scope", "$rootScope", "LoaderService"];angular
+    .module('da-loader.controllers')
+    .controller('LoaderUiRouterController', LoaderUiRouterController);
+
+/* @ngInject */
+function LoaderUiRouterController($scope, $rootScope, LoaderService){
+    var vm = this;
+
+    var onStart;
+    var onError;
+    var onSuccess;
+    var onNotFound;
+    var onDestroy;
+
+    vm.setUp = setUp;
+    vm.tearDown = tearDown;
+
+    ///////////
+    function setUp(){
+        onStart = $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+            LoaderService.enable();
+        });
+
+        onError = $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+            LoaderService.disable();
+        });
+
+        onSuccess = $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+            LoaderService.disable();
+        });
+
+        onNotFound = $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
+            LoaderService.disable();
+        });
+
+        onDestroy = $scope.$on('$destroy', function(){
+            console.log("Tear down");
+            tearDown();
+        });
+    }
+
+    function tearDown(){
+        onStart();
+        onError();
+        onSuccess();
+        onNotFound();
+        onDestroy();
+    }
+}
+
+
+LoaderDirective.$inject = ["$rootScope", "LoaderService", "$parse"];
 angular
     .module('da-loader.directives')
     .directive('daLoader', LoaderDirective);
 
 /* @ngInject */
-function LoaderDirective($rootScope, LoaderService){
+function LoaderDirective($rootScope, LoaderService, $parse){
     return {
-        scope: {}, // {} = isolate, true = child, false/undefined = no change
-        controller: "@",
-        name: "controller",
+        scope: true, // {} = isolate, true = child, false/undefined = no change
+        controller: "DALoaderController",
         restrict: 'AE',
         templateUrl: 'da-loader/loader.html',
         replace: true,
@@ -125,25 +194,24 @@ function LoaderDirective($rootScope, LoaderService){
         return {
             pre: preLink,
             post: postLink
-        }            
-    };
+        };
+    }
 
     function preLink($scope, element, attrs, controller) {
-        if( !attrs.controller ){
-            attrs.controller = "LoaderUiRouterController";
+        if(!attrs.hooks){
+            attrs.hooks = '["LoaderUiRouterController"]';
         }
-    };
+        var hooks = $parse(attrs.hooks)($scope);
 
-    function postLink($scope, element, attrs, controller) {
-        $scope.displayStatus = LoaderService.isActive() ? 'block' : 'none';            
+        $scope.hooks = hooks;
+        delete attrs.hooks;
+    }
 
-        $scope.$watch(function(){
-            return LoaderService.isActive();
-        }, function(newValue){
-            $scope.displayStatus = LoaderService.isActive() ? 'block' : 'none';
-        });        
-    };
-};
+    function postLink($scope, element, attrs, controller){
+        controller.setUp();
+    }
+}
+
 
 LoaderService.$inject = ["$state"];angular
     .module('da-loader.services')
@@ -179,14 +247,5 @@ function LoaderService($state){
     function isActive(){
         return service.isShowing;
     };
-}
-
-viewConfig.$inject = ["$templateCache"];angular
-    .module('da-loader.views')
-    .run(viewConfig);
-    
-/* @ngInject */
-function viewConfig($templateCache){
-    //$templateCache.put('da-loader/loader.html', '<div class="da-loader" ng-style="{\'display\': displayStatus()}"></div>');
 }
 })();
