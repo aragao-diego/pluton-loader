@@ -52,7 +52,7 @@ describe('Diretiva do loader', function() {
             $scope.info = "";
             $scope.loaded = false;  
 
-            
+            controlador = $controller("TestController", {'$scope': $scope, LoaderService: LoaderService});
         });
 
         it('Conteúdo da diretiva deve ser o esperado de acordo com o template informado',function(){  
@@ -65,7 +65,7 @@ describe('Diretiva do loader', function() {
 
         it('Executa o comando de setUp na criação da diretiva', function(){
             $scope.info = "From test";
-            controlador = $controller("TestController", {'$scope': $scope, LoaderService: LoaderService});
+            
             directive = compiledDirective();
             console.log($scope.info);
 
