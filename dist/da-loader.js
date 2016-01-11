@@ -105,31 +105,43 @@ LoaderNgRouterController.$inject = ["$rootScope", "LoaderService"];angular
 
 /* @ngInject */
 function LoaderNgRouterController($rootScope, LoaderService){
-    var vm = {
-        config: config
-    };
+    var vm = this;
 
-    return vm;
+    var onStart;
+    var onError;
+    var onSuccess;
+    var onDestroy;
 
-    //////////////////////////
-    function config(){
-        $rootScope.$on('$routeChangeStart', function(event, toState, toParams, fromState, fromParams){
+    vm.setUp = setUp;
+    vm.tearDown = tearDown;
+
+    ///////////
+    function setUp(){
+        onStart = $rootScope.$on('$routeChangeStart', function(event, toState, toParams, fromState, fromParams){
             LoaderService.enable();
         });
 
-        $rootScope.$on('$routeChangeError', function(event, toState, toParams, fromState, fromParams, error){
+        onError = $rootScope.$on('$routeChangeError', function(event, toState, toParams, fromState, fromParams, error){
             LoaderService.disable();
         });
 
-        $rootScope.$on('$routeChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+        onSuccess = $rootScope.$on('$routeChangeSuccess', function(event, toState, toParams, fromState, fromParams){
             LoaderService.disable();
         });
 
-        $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
-            LoaderService.disable();
-        });
-    }    
+        // onDestroy = $scope.$on('$destroy', function(){
+        //     tearDown();
+        // });
+    }
+
+    function tearDown(){
+        onStart();
+        onError();
+        onSuccess();
+        // onDestroy();
+    }
 }
+
 
 LoaderUiRouterController.$inject = ["$scope", "$rootScope", "LoaderService"];angular
     .module('da-loader.controllers')
@@ -166,10 +178,10 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
             LoaderService.disable();
         });
 
-        onDestroy = $scope.$on('$destroy', function(){
-            console.log("Tear down");
-            tearDown();
-        });
+        // onDestroy = $scope.$on('$destroy', function(){
+        //     console.log("Tear down");
+        //     tearDown();
+        // });
     }
 
     function tearDown(){
@@ -177,7 +189,7 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
         onError();
         onSuccess();
         onNotFound();
-        onDestroy();
+        // onDestroy();
     }
 }
 
