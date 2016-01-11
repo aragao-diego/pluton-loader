@@ -22,7 +22,6 @@ function LoaderDirective($rootScope, LoaderService, $parse){
             post: postLink
         };
     }
-
     function preLink($scope, element, attrs, controller) {
         if(!attrs.hooks){
             attrs.hooks = '["LoaderUiRouterController"]';
@@ -32,7 +31,6 @@ function LoaderDirective($rootScope, LoaderService, $parse){
         $scope.hooks = hooks;
         delete attrs.hooks;
     }
-
     function postLink($scope, element, attrs, controller){
         controller.createHooks();
         controller.setUp();
