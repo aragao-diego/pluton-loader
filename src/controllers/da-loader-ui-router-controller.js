@@ -33,10 +33,10 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
             LoaderService.disable();
         });
 
-        onDestroy = $scope.$on('$destroy', function(){
-            console.log("Tear down");
-            tearDown();
-        });
+        // onDestroy = $scope.$on('$destroy', function(){
+        //     console.log("Tear down");
+        //     tearDown();
+        // });
     }
 
     function tearDown(){
@@ -44,6 +44,6 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
         onError();
         onSuccess();
         onNotFound();
-        onDestroy();
+        // onDestroy();
     }
 }
