@@ -47,7 +47,7 @@ function DALoaderController($scope, $controller, $rootScope, LoaderService){
     vm.tearDown = tearDown;
     vm.createHooks = createHooks;
     vm.hooks = [];
-    vm.display = false;
+    $scope.display = false;
 
     ///////////////
     function verifyHook(hook){
@@ -84,7 +84,7 @@ function DALoaderController($scope, $controller, $rootScope, LoaderService){
         watchChangeInService = $scope.$watch(function(){
             return LoaderService.isActive();
         }, function(newValue, oldValue){
-            vm.display = newValue;
+            $scope.display = newValue;
         });
 
         onDestroy = $scope.$on('$destroy',tearDown);
