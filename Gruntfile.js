@@ -59,8 +59,9 @@ module.exports = function(grunt) {
       },
       statics: {
         files: [{
-            expand: false,
+            expand: true,
             dot: true,
+            flatten: true,
             cwd: '<%= yeoman.temp %>',
             dest: '<%= yeoman.dist %>/img',
             src: [ '**/*.gif', '**/*.jpeg', '**/*.png']
