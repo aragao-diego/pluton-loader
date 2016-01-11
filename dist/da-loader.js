@@ -218,6 +218,7 @@ function LoaderDirective($rootScope, LoaderService, $parse){
     }
 
     function postLink($scope, element, attrs, controller){
+        controller.createHooks();
         controller.setUp();
     }
 }
