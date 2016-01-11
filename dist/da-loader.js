@@ -12,7 +12,7 @@ function createSubModules(element, index, array){
     var subModuleName = moduleName+'.'+element;
     angular.module(subModuleName, []);
     array[index] = subModuleName;
-};
+}
 
 
 configLoader.$inject = ["$ocLazyLoadProvider"];angular
@@ -41,11 +41,13 @@ DALoaderController.$inject = ["$scope", "$controller", "$rootScope"];angular
 function DALoaderController($scope, $controller, $rootScope){
     var vm = this;
     var onDestroy;
+    var watchService
 
     vm.setUp = setUp;
     vm.tearDown = tearDown;
     vm.createHooks = createHooks;
     vm.hooks = [];
+    vm.display = false;
 
     ///////////////
     function verifyHook(hook){
@@ -79,7 +81,7 @@ function DALoaderController($scope, $controller, $rootScope){
     }
 
     function setUp(){
-        onDestroy = $scope.$watch('$destroy',tearDown);
+        onDestroy = $scope.$on('$destroy',tearDown);
         return setUpHooks();
     }
 
@@ -237,15 +239,16 @@ function LoaderService($state){
     ///////
     function enable(){
         service.isShowing = true;
-    };
+    }
     function disable(){
         service.isShowing = false;
-    };
+    }
     function toggle(){
         service.isShowing = !service.isShowing;
-    };
+    }
     function isActive(){
         return service.isShowing;
-    };
+    }
 }
+
 })();

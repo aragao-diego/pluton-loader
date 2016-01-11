@@ -29,9 +29,9 @@ describe('Diretiva do loader', function() {
 
             this.setUp = function(){
                 $scope.loaded = true;
-                console.log($scope.info);
             };
             this.tearDown = function(){
+                console.log('tearDown()!');
             };
         })
         .controller('TestController2', function(){
@@ -88,6 +88,15 @@ describe('Diretiva do loader', function() {
 
             expect(directive.scope().hooks).toBeArray();
             expect(directive.scope().hooks.length).toBe(2);
+        });
+
+        it('Deve chamar o tearDown depois que a diretiva for removida', function(){
+            $templateCache.put('da-loader/loader.html','<div class="da-loader"></div>');
+            directive = compiledDirective('[\'TestController\']');
+
+            directive.remove();
+            $rootScope.$digest();
+
         });
     });
 

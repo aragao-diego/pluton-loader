@@ -22,14 +22,14 @@ function LoaderService($state){
     ///////
     function enable(){
         service.isShowing = true;
-    };
+    }
     function disable(){
         service.isShowing = false;
-    };
+    }
     function toggle(){
         service.isShowing = !service.isShowing;
-    };
+    }
     function isActive(){
         return service.isShowing;
-    };
+    }
 }

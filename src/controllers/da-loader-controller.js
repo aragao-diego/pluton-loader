@@ -3,14 +3,16 @@ angular
     .controller('DALoaderController', DALoaderController);
 
 /*@ngInject*/
-function DALoaderController($scope, $controller, $rootScope){
+function DALoaderController($scope, $controller, $rootScope, LoaderService){
     var vm = this;
     var onDestroy;
+    var watchChangeInService;
 
     vm.setUp = setUp;
     vm.tearDown = tearDown;
     vm.createHooks = createHooks;
     vm.hooks = [];
+    vm.display = false;
 
     ///////////////
     function verifyHook(hook){
@@ -44,12 +46,19 @@ function DALoaderController($scope, $controller, $rootScope){
     }
 
     function setUp(){
-        onDestroy = $scope.$watch('$destroy',tearDown);
+        watchChangeInService = $scope.$watch(function(){
+            return LoaderService.isActive();
+        }, function(newValue, oldValue){
+            vm.display = newValue;
+        });
+
+        onDestroy = $scope.$on('$destroy',tearDown);
         return setUpHooks();
     }
 
     function tearDown(){
         onDestroy();
+        watchChangeInService();
         return tearDownHooks();
     }
 }

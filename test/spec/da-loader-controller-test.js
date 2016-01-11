@@ -5,16 +5,20 @@ describe('Testando o controlador prinicipal da diretiva', function(){
     var $scope;
     var $controller;
     var controlador;
+    var LoaderService;
 
     beforeEach( function(){
         module('ui.router');
         module('oc.lazyLoad');
+        module('da-loader.services');
         module('da-loader.controllers');
+
     });
 
-    beforeEach( inject(function(_$rootScope_, _$controller_){
+    beforeEach( inject(function(_$rootScope_, _$controller_, _LoaderService_){
         $rootScope = _$rootScope_;
         $controller = _$controller_;
+        LoaderService = _LoaderService_;
 
         $scope = $rootScope.$new();
     }));

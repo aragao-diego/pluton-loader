@@ -8,6 +8,7 @@ function LoaderDirective($rootScope, LoaderService, $parse){
     return {
         scope: true, // {} = isolate, true = child, false/undefined = no change
         controller: "DALoaderController",
+        controllerAs: "vm",
         restrict: 'AE',
         templateUrl: 'da-loader/loader.html',
         replace: true,

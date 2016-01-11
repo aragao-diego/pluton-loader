@@ -10,4 +10,4 @@ function createSubModules(element, index, array){
     var subModuleName = moduleName+'.'+element;
     angular.module(subModuleName, []);
     array[index] = subModuleName;
-};
+}
