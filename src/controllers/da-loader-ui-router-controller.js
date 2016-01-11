@@ -32,11 +32,6 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
         onNotFound = $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
             LoaderService.disable();
         });
-
-        // onDestroy = $scope.$on('$destroy', function(){
-        //     console.log("Tear down");
-        //     tearDown();
-        // });
     }
 
     function tearDown(){
@@ -44,6 +39,5 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
         onError();
         onSuccess();
         onNotFound();
-        // onDestroy();
     }
 }

@@ -6,7 +6,7 @@ angular
 /* @ngInject */
 function LoaderDirective($rootScope, LoaderService, $parse){
     return {
-        scope: true, // {} = isolate, true = child, false/undefined = no change
+        scope: true,
         controller: "DALoaderController",
         controllerAs: "vm",
         restrict: 'AE',

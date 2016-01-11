@@ -27,16 +27,11 @@ function LoaderNgRouterController($rootScope, LoaderService){
         onSuccess = $rootScope.$on('$routeChangeSuccess', function(event, toState, toParams, fromState, fromParams){
             LoaderService.disable();
         });
-
-        // onDestroy = $scope.$on('$destroy', function(){
-        //     tearDown();
-        // });
     }
-
+    
     function tearDown(){
         onStart();
         onError();
         onSuccess();
-        // onDestroy();
     }
 }

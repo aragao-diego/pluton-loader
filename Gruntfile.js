@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     module: 'da-loader'
   };
 
-  // Configure Grunt 
+  // Configure Grunt
   grunt.initConfig({
 
     // Project settings
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
     watch: {
       all: {
         // Replace with whatever file you want to trigger the update from
-        // Either as a String for a single entry 
+        // Either as a String for a single entry
         // or an Array of String for multiple entries
         // You can use globing patterns like `css/**/*.css`
         // See https://github.com/gruntjs/grunt-contrib-watch#files
@@ -59,12 +59,13 @@ module.exports = function(grunt) {
       },
       statics: {
         files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.temp %>',
-          dest: '<%= yeoman.dist %>',
-          src: [ '*.html']
-        }]
+            expand: false,
+            dot: true,
+            cwd: '<%= yeoman.temp %>',
+            dest: '<%= yeoman.dist %>/img',
+            src: [ '**/*.gif', '**/*.jpeg', '**/*.png']
+          }
+        ]
       }
     },
 
@@ -124,7 +125,7 @@ module.exports = function(grunt) {
         files: {
           'dist/index.html': ['dist/index.html']
         }
-      }      
+      }
     },
 
     cssmin: {
@@ -234,11 +235,12 @@ module.exports = function(grunt) {
   grunt.registerTask('build',[
     'test',
     'copy:dist',
+    'copy:statics',
     'ngAnnotate:dist',
     'htmlmin:dist',
     'concat:dist',
     'concat:assets',
-    'concat:views',    
+    'concat:views',
     'uglify:dist',
     'clean:temp'
   ]);
