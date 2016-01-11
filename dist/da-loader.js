@@ -33,15 +33,15 @@ function configLoader($ocLazyLoadProvider){
     });
 }
 
-DALoaderController.$inject = ["$scope", "$controller", "$rootScope"];angular
+DALoaderController.$inject = ["$scope", "$controller", "$rootScope", "LoaderService"];angular
     .module('da-loader.controllers')
     .controller('DALoaderController', DALoaderController);
 
 /*@ngInject*/
-function DALoaderController($scope, $controller, $rootScope){
+function DALoaderController($scope, $controller, $rootScope, LoaderService){
     var vm = this;
     var onDestroy;
-    var watchService
+    var watchChangeInService;
 
     vm.setUp = setUp;
     vm.tearDown = tearDown;
@@ -81,12 +81,19 @@ function DALoaderController($scope, $controller, $rootScope){
     }
 
     function setUp(){
+        watchChangeInService = $scope.$watch(function(){
+            return LoaderService.isActive();
+        }, function(newValue, oldValue){
+            vm.display = newValue;
+        });
+
         onDestroy = $scope.$on('$destroy',tearDown);
         return setUpHooks();
     }
 
     function tearDown(){
         onDestroy();
+        watchChangeInService();
         return tearDownHooks();
     }
 }
@@ -185,6 +192,7 @@ function LoaderDirective($rootScope, LoaderService, $parse){
     return {
         scope: true, // {} = isolate, true = child, false/undefined = no change
         controller: "DALoaderController",
+        controllerAs: "vm",
         restrict: 'AE',
         templateUrl: 'da-loader/loader.html',
         replace: true,
