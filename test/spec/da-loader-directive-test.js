@@ -64,6 +64,7 @@ describe('Diretiva do loader', function() {
             $scope = $rootScope.$new();
             $scope.info = '';
             $scope.loaded = false;
+
         });
 
         it('Conteúdo da diretiva deve ser o esperado de acordo com o template informado',function(){
