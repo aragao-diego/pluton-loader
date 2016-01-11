@@ -101,7 +101,7 @@ describe('Diretiva do loader', function() {
     });
 
     function compiledDirective(hooks){
-        var element = angular.element('<da-loader hooks="'+hooks+'"></da-loader>');
+        var element = angular.element('<da-loader hooks="'+hooks+'">{{}}</da-loader>');
         var compiledElement = $compile(element)($scope);
 
         $rootScope.$digest();
