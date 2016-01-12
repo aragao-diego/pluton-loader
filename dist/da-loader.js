@@ -59,7 +59,7 @@ function DALoaderController($scope, $controller, $rootScope, LoaderService){
 
     function createHooks(){
         angular.forEach($scope.hooks, function(nomeControlador, index){
-            var controlador = $controller(nomeControlador, {'$scope': $rootScope.$new()});
+            var controlador = $controller(nomeControlador, {'$scope': $scope});
             if(!verifyHook(controlador)){
                 throw new Error("O controlador "+ nomeControlador +" não implementa as funções esperadas(setUp,tearDown)");
             }
@@ -99,12 +99,12 @@ function DALoaderController($scope, $controller, $rootScope, LoaderService){
 }
 
 
-LoaderNgRouterController.$inject = ["$rootScope", "LoaderService"];angular
+LoaderNgRouterController.$inject = ["$scope", "$rootScope", "LoaderService"];angular
     .module('da-loader.controllers')
     .controller('LoaderNgRouterController', LoaderNgRouterController);
 
 /* @ngInject */
-function LoaderNgRouterController($rootScope, LoaderService){
+function LoaderNgRouterController($scope, $rootScope, LoaderService){
     var vm = this;
 
     var onStart;
@@ -129,11 +129,74 @@ function LoaderNgRouterController($rootScope, LoaderService){
             LoaderService.disable();
         });
     }
-    
+
     function tearDown(){
         onStart();
         onError();
         onSuccess();
+    }
+}
+
+
+LoaderRestangularController.$inject = ["$scope", "LoaderService", "Restangular"];angular
+    .module('da-loader.controllers')
+    .controller('LoaderRestangularController', LoaderRestangularController);
+
+/* @ngInject */
+function LoaderRestangularController($scope, LoaderService, Restangular){
+    var vm = this;
+
+    vm.pendingRequests = 0;
+    vm.setUp = setUp;
+    vm.tearDown = tearDown;
+    vm.incrementRequest = incrementRequest;
+    vm.decrementRequest = decrementRequest;
+    vm.hasPendingRequests = hasPendingRequests;
+
+    ///////////
+    function setUp(){
+        Restangular.addRequestInterceptor(requestInterceptor);
+        Restangular.addResponseInterceptor(respondeInterceptor);
+        Restangular.addErrorInterceptor(errorInterceptor);
+    }
+
+    function tearDown(){
+    }
+
+    function requestInterceptor(element, operation, what, url) {
+        if (vm.pendingRequests === 0) {
+            LoaderService.enable();
+        }
+        vm.incrementRequest();
+        return element;
+    }
+
+    function responseInterceptor(data, operation, what, url, response, deferred) {
+        vm.decrementRequest();
+        if (!vm.hasPendingRequests()) {
+            LoaderService.disable();
+        }
+        return data;
+    }
+
+    function errorInterceptor(response, deferred, responseHandler) {
+        vm.decrementRequest();
+        if (!vm.hasPendingRequests()) {
+            LoaderService.disable();
+        }
+        return true; // error not handled
+    }
+
+    function incrementRequest(){
+        self.pendingRequests++;
+    }
+
+    function decrementRequest(){
+        self.pendingRequests--;
+    }
+
+    function hasPendingRequests(){
+        return self.pendingRequests > 0;
     }
 }
 

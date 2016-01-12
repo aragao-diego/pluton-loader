@@ -3,7 +3,7 @@ angular
     .controller('LoaderNgRouterController', LoaderNgRouterController);
 
 /* @ngInject */
-function LoaderNgRouterController($rootScope, LoaderService){
+function LoaderNgRouterController($scope, $rootScope, LoaderService){
     var vm = this;
 
     var onStart;
@@ -28,7 +28,7 @@ function LoaderNgRouterController($rootScope, LoaderService){
             LoaderService.disable();
         });
     }
-    
+
     function tearDown(){
         onStart();
         onError();

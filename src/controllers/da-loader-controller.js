@@ -24,7 +24,7 @@ function DALoaderController($scope, $controller, $rootScope, LoaderService){
 
     function createHooks(){
         angular.forEach($scope.hooks, function(nomeControlador, index){
-            var controlador = $controller(nomeControlador, {'$scope': $rootScope.$new()});
+            var controlador = $controller(nomeControlador, {'$scope': $scope});
             if(!verifyHook(controlador)){
                 throw new Error("O controlador "+ nomeControlador +" não implementa as funções esperadas(setUp,tearDown)");
             }
