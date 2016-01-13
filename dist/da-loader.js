@@ -156,7 +156,7 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
     ///////////
     function setUp(){
         Restangular.addRequestInterceptor(requestInterceptor);
-        Restangular.addResponseInterceptor(respondeInterceptor);
+        Restangular.addResponseInterceptor(responseInterceptor);
         Restangular.addErrorInterceptor(errorInterceptor);
     }
 
