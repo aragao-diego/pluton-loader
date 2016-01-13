@@ -19,15 +19,18 @@
     "README.md"
   ],
   "dependencies": {
-    "angular": "^1.4.x"
-  },
-  "devDependencies": {
-    "jasmine-expect": "~1.22.3",
+    "angular": "^1.4.x",
     "angular-ui-router": "~0.2.13",
     "angular-mocks": "~1.4.8",
-    "oclazyload": "~1.0.9"
+    "oclazyload": "~1.0.9",
+    "lodash": "3.10.1",
+    "restangular": "~1.4.0"
+  },
+  "devDependencies": {
+    "jasmine-expect": "~1.22.3"
   },
   "resolutions": {
-    "angular": "1.4.7"
+    "angular": "1.4.7",
+    "lodash": "3.10.1"
   }
 }
