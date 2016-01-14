@@ -46,7 +46,7 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
         }
 
         deferred.promise.then(checkForFullResponse);
-        return true;
+        return data;
     }
 
     function errorInterceptor(response, deferred, responseHandler) {
@@ -59,11 +59,9 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
 
     function checkForFullResponse(data){
         if(data && data.config && data.config.hasOwnProperty('da-loader') && data.config['da-loader'] === false ){
-            console.log("SEM LOADER!");
             return true;
         }
 
-        console.log("COM LOADER!");
         vm.decrementRequest();
         if (!vm.hasPendingRequests()) {
             LoaderService.disable();
