@@ -155,7 +155,7 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
 
     ///////////
     function setUp(){
-        Restangular.addRequestInterceptor(requestInterceptor);
+        Restangular.addFullRequestInterceptor(requestInterceptor);
         Restangular.addResponseInterceptor(responseInterceptor);
         Restangular.addErrorInterceptor(errorInterceptor);
     }
@@ -163,7 +163,11 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
     function tearDown(){
     }
 
-    function requestInterceptor(element, operation, what, url) {
+    function requestInterceptor(element, operation, what, url, headers, params, httpConfig) {
+        if(httpConfig && httpConfig.hasOwnProperty('da-loader') && httpConfig['da-loader'] === false ){
+            return element;
+        }
+
         if (vm.pendingRequests === 0) {
             LoaderService.enable();
         }
@@ -172,11 +176,17 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
     }
 
     function responseInterceptor(data, operation, what, url, response, deferred) {
-        vm.decrementRequest();
-        if (!vm.hasPendingRequests()) {
-            LoaderService.disable();
+        //Sem o fullResponse não tem como saber qual os headers do request
+        if(Restangular.configuration.fullResponse === false){
+            vm.decrementRequest();
+            if (!vm.hasPendingRequests()) {
+                LoaderService.disable();
+            }
+            return data;
         }
-        return data;
+
+        deferred.promise.then(checkForFullResponse);
+        return true;
     }
 
     function errorInterceptor(response, deferred, responseHandler) {
@@ -185,6 +195,19 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
             LoaderService.disable();
         }
         return true; // error not handled
+    }
+
+    function checkForFullResponse(data){
+        if(data && data.config && data.config.hasOwnProperty('da-loader') && data.config['da-loader'] === false ){
+            console.log("SEM LOADER!");
+            return true;
+        }
+
+        console.log("COM LOADER!");
+        vm.decrementRequest();
+        if (!vm.hasPendingRequests()) {
+            LoaderService.disable();
+        }
     }
 
     function incrementRequest(){
