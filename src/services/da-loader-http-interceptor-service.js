@@ -11,7 +11,10 @@
             'requestError': requestErrorInterceptor,
             'response': responseInterceptor,
             'responseError': reponseErrorInterceptor,
-            'pendingRequests': 0
+            'pendingRequests': 0,
+            'incrementRequest': incrementRequest,
+            'decrementRequest': decrementRequest,
+            'hasPendingRequests': hasPendingRequests            
         };
         return interceptor;
 
