@@ -1,7 +1,7 @@
 {
   "name": "da-loader",
   "description": "Componente LOADER angular",
-  "version": "0.0.47",
+  "version": "0.0.48",
   "homepage": "https://gitlab.apoio.fsw.ctis.com.br/dit-angular/da-loader",
   "license": "MIT",
   "private": true,
