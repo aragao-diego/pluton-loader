@@ -1,7 +1,7 @@
 {
   "name": "da-loader",
   "description": "Componente LOADER angular",
-  "version": "0.0.51",
+  "version": "0.0.52",
   "homepage": "https://gitlab.apoio.fsw.ctis.com.br/dit-angular/da-loader",
   "license": "MIT",
   "private": true,
@@ -28,7 +28,5 @@
   },
   "devDependencies": {
     "jasmine-expect": "~1.22.3"
-  },
-  "resolutions": {
   }
 }
