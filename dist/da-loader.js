@@ -347,13 +347,13 @@ function LoaderDirective($rootScope, LoaderService, $parse){
             'pendingRequests': 0,
             'incrementRequest': incrementRequest,
             'decrementRequest': decrementRequest,
-            'hasPendingRequests': hasPendingRequests            
+            'hasPendingRequests': hasPendingRequests
         };
         return interceptor;
 
         ///////////////
         function requestInterceptor(config){
-            if(notUseLoader(config.headers)){
+            if(notUseLoader(config)){
                 return config;
             }
 
@@ -370,7 +370,7 @@ function LoaderDirective($rootScope, LoaderService, $parse){
         }
 
         function responseInterceptor(response){
-            if(notUseLoader(response.config.headers)){
+            if(notUseLoader(response.config)){
                 return response;
             }
 
@@ -383,7 +383,7 @@ function LoaderDirective($rootScope, LoaderService, $parse){
         }
 
         function reponseErrorInterceptor(rejection){
-            if(notUseLoader(rejection.config.headers)){
+            if(notUseLoader(rejection.config)){
                 return rejection;
             }
 
