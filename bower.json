@@ -30,7 +30,5 @@
     "jasmine-expect": "~1.22.3"
   },
   "resolutions": {
-    "angular": "1.4.7",
-    "lodash": "3.10.1"
   }
 }
