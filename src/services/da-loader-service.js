@@ -3,7 +3,7 @@ angular
     .service('LoaderService', LoaderService );
 
 /* @ngInject */
-function LoaderService($state){
+function LoaderService(){
     var vm = this;
 
     var isShowing = false;
