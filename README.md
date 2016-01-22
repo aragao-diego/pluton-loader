@@ -54,3 +54,5 @@ Restangular.setFullResponse(true);
 ````
 Restangular.one('exemplo/testelongsemloader').withHttpConfig({'da-loader':false, cache: false}).getList()
 ````
+
+![flow](http://i.imgur.com/PT8iTNJ.png)
