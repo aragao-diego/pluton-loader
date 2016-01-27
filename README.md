@@ -54,5 +54,7 @@ Restangular.setFullResponse(true);
 ````
 Restangular.one('exemplo/testelongsemloader').withHttpConfig({'da-loader':false, cache: false}).getList()
 ````
+* Caso o evento de inicio de transição seja interceptado, o loader continuará a ser exibido, terá que ser chamado o método para desabilita-lo
+* Problemas de compatibilidade com ngAnimate, versão que funciona: _1.4.1_
 
 ![flow](http://i.imgur.com/PT8iTNJ.png)
