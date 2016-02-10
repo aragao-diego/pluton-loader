@@ -1,6 +1,6 @@
 .da-loader {
-    display: "block";
-    position: absolute;
+    display: block;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 2000;
