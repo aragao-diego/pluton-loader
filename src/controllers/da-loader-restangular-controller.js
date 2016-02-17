@@ -69,14 +69,14 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
     }
 
     function incrementRequest(){
-        self.pendingRequests++;
+        vm.pendingRequests++;
     }
 
     function decrementRequest(){
-        self.pendingRequests--;
+        vm.pendingRequests--;
     }
 
     function hasPendingRequests(){
-        return self.pendingRequests > 0;
+        return vm.pendingRequests > 0;
     }
 }
