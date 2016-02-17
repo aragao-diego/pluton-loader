@@ -10,28 +10,6 @@ describe('Serviço do loader', function() {
     var $compile;
     var directive;
     var $scope;
-    var _states = {
-        'app': {
-            url: '/app',
-            resolve: {
-
-            }
-        },
-        'app.tela1': {
-            url: '/tela1',
-            resolve: {
-
-
-            }
-        },
-        'app.tela2': {
-            url: '/tela2',
-            resolve: {
-
-
-            }
-        }
-    };
 
     beforeEach( function(){
         module('ui.router');
@@ -39,14 +17,6 @@ describe('Serviço do loader', function() {
         module('da-loader.services');
         module('da-loader.directives');
     });
-
-    beforeEach( module(function($stateProvider){
-        stateProvider = $stateProvider;
-
-        angular.forEach(_states, function(stateConfig, stateName){
-            stateProvider.state(stateName,stateConfig);
-        });
-    }));
 
     beforeEach( inject(function(_$state_, _$rootScope_, _LoaderService_, _$timeout_, _$compile_, _$templateCache_){
         $state = _$state_;
@@ -60,7 +30,7 @@ describe('Serviço do loader', function() {
 
     }));
 
-    describe('Métodos e propriedades', function(){
+    describe('Métodos e propriedades', inject(function(LoaderService){
         it('Que tenha função enable', function(){
             expect(LoaderService).toHaveMethod('enable');
         });
@@ -73,7 +43,7 @@ describe('Serviço do loader', function() {
         it('Que tenha função isActive', function(){
             expect(LoaderService).toHaveMethod('isActive');
         });
-    });
+    }));
 
     describe('Configurações iniciais do serviço', function(){
         it('Inicialmente, estado de carregamento é falso', function(){

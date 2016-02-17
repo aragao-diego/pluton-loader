@@ -27,11 +27,12 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
         if(httpConfig && httpConfig.hasOwnProperty('da-loader') && httpConfig['da-loader'] === false ){
             return element;
         }
+        vm.incrementRequest();
 
-        if (vm.pendingRequests === 0) {
+        if (hasPendingRequests()) {
             LoaderService.enable();
         }
-        vm.incrementRequest();
+
         return element;
     }
 
