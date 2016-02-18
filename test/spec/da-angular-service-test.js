@@ -30,7 +30,7 @@ describe('Serviço do loader', function() {
 
     }));
 
-    describe('Métodos e propriedades', inject(function(LoaderService){
+    describe('Métodos e propriedades', function(){
         it('Que tenha função enable', function(){
             expect(LoaderService).toHaveMethod('enable');
         });
@@ -43,7 +43,7 @@ describe('Serviço do loader', function() {
         it('Que tenha função isActive', function(){
             expect(LoaderService).toHaveMethod('isActive');
         });
-    }));
+    });
 
     describe('Configurações iniciais do serviço', function(){
         it('Inicialmente, estado de carregamento é falso', function(){
