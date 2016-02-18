@@ -301,7 +301,7 @@ angular
 function LoaderDirective($rootScope, LoaderService, $parse){
     return {
         scope: true,
-        priority: 500, 
+        priority: 500,
         controller: "DALoaderController",
         controllerAs: "vm",
         restrict: 'AE',
@@ -325,10 +325,11 @@ function LoaderDirective($rootScope, LoaderService, $parse){
 
         $scope.hooks = hooks;
         delete attrs.hooks;
-    }
-    function postLink($scope, element, attrs, controller){
+
         controller.createHooks();
         controller.setUp();
+    }
+    function postLink($scope, element, attrs, controller){
     }
 }
 
@@ -359,10 +360,11 @@ function LoaderDirective($rootScope, LoaderService, $parse){
                 return config;
             }
 
+            interceptor.incrementRequest();
             if (interceptor.pendingRequests === 0) {
                 LoaderService.enable();
             }
-            interceptor.incrementRequest();
+
 
             return config;
         }
