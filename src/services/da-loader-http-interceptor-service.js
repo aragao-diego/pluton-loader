@@ -24,10 +24,11 @@
                 return config;
             }
 
+            interceptor.incrementRequest();
             if (interceptor.pendingRequests === 0) {
                 LoaderService.enable();
             }
-            interceptor.incrementRequest();
+
 
             return config;
         }
