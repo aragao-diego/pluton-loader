@@ -7,6 +7,7 @@ angular
 function LoaderDirective($rootScope, LoaderService, $parse){
     return {
         scope: true,
+        priority: 500,
         controller: "DALoaderController",
         controllerAs: "vm",
         restrict: 'AE',
