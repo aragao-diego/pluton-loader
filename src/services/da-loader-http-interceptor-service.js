@@ -25,7 +25,7 @@
             }
 
             interceptor.incrementRequest();
-            if (interceptor.pendingRequests === 0) {
+            if (hasPendingRequests()) {
                 LoaderService.enable();
             }
 
