@@ -34,7 +34,7 @@
         }
 
         function requestErrorInterceptor(rejection){
-            return rejection;
+            return $q.reject(rejection);
         }
 
         function responseInterceptor(response){
@@ -52,7 +52,7 @@
 
         function reponseErrorInterceptor(rejection){
             if(notUseLoader(rejection.config)){
-                return rejection;
+                return $q.reject(rejection);
             }
 
             interceptor.decrementRequest();
@@ -60,7 +60,7 @@
                 LoaderService.disable();
             }
 
-            return rejection;
+            return $q.reject(rejection);
         }
 
         function notUseLoader(data){
