@@ -370,7 +370,7 @@ function LoaderDirective($rootScope, LoaderService, $parse){
         }
 
         function requestErrorInterceptor(rejection){
-            return rejection;
+            return $q.reject(rejection);
         }
 
         function responseInterceptor(response){
@@ -388,7 +388,7 @@ function LoaderDirective($rootScope, LoaderService, $parse){
 
         function reponseErrorInterceptor(rejection){
             if(notUseLoader(rejection.config)){
-                return rejection;
+                return $q.reject(rejection);
             }
 
             interceptor.decrementRequest();
@@ -396,7 +396,7 @@ function LoaderDirective($rootScope, LoaderService, $parse){
                 LoaderService.disable();
             }
 
-            return rejection;
+            return $q.reject(rejection);
         }
 
         function notUseLoader(data){
