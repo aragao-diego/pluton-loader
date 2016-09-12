@@ -23,7 +23,7 @@
     "angular-ui-router": "~0.2.13",
     "angular-mocks": "^1.4.X",
     "oclazyload": "~1.0.9",
-    "lodash": "3.10.1",
+    "lodash": "4.X",
     "restangular": "~1.5.0"
   },
   "devDependencies": {
