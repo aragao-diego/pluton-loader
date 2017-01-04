@@ -1,0 +1,32 @@
+{
+  "name": "pluton-loader",
+  "description": "Componente LOADER angular",
+  "version": "0.0.70",
+  "homepage": "https://github.com/aragao-diego/pluton-loader.git",
+  "license": "MIT",
+  "private": true,
+  "main": ["dist/pluton-loader.js", "dist/pluton-loader.css"],
+  "ignore": [
+    "src",
+    "spec",
+    ".bowerrc",
+    ".gitignore",
+    ".jshintignore",
+    ".jshintrc",
+    "bower.json",
+    "gruntfile.js",
+    "package.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "angular": "^1.4.x",
+    "angular-ui-router": "~0.2.13",
+    "angular-mocks": "^1.4.X",
+    "oclazyload": "~1.0.9",
+    "lodash": "4.X",
+    "restangular": "~1.5.0"
+  },
+  "devDependencies": {
+    "jasmine-expect": "~1.22.3"
+  }
+}

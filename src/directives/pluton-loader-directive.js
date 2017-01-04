@@ -1,17 +1,17 @@
 
 angular
-    .module('da-loader.directives')
-    .directive('daLoader', LoaderDirective);
+    .module('pluton-loader.directives')
+    .directive('PlutonLoader', LoaderDirective);
 
 /* @ngInject */
-function LoaderDirective($rootScope, LoaderService, $parse){
+function LoaderDirective($rootScope, PlutonLoaderService, $parse){
     return {
         scope: true,
         priority: 500,
-        controller: "DALoaderController",
+        controller: "PlutonLoaderController",
         controllerAs: "vm",
         restrict: 'AE',
-        templateUrl: 'da-loader/loader.html',
+        templateUrl: 'pluton-loader/loader.html',
         replace: true,
         compile: compile
     };

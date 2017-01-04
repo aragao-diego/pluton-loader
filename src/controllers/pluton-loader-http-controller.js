@@ -1,10 +1,10 @@
 (function(){
     angular
-        .module('da-loader.controllers')
+        .module('pluton-loader.controllers')
         .controller('LoaderHttpController', LoaderHttpController);
 
     /* @ngInject */
-    function LoaderHttpController($scope, LoaderService){
+    function LoaderHttpController($scope, PlutonLoaderService){
         var vm = this;
 
         vm.setUp = setUp;

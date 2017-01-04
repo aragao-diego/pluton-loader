@@ -1,9 +1,9 @@
 angular
-    .module('da-loader.controllers')
+    .module('pluton-loader.controllers')
     .controller('LoaderRestangularController', LoaderRestangularController);
 
 /* @ngInject */
-function LoaderRestangularController($scope, LoaderService, Restangular){
+function LoaderRestangularController($scope, PlutonLoaderService, Restangular){
     var vm = this;
 
     vm.pendingRequests = 0;
@@ -24,13 +24,13 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
     }
 
     function requestInterceptor(element, operation, what, url, headers, params, httpConfig) {
-        if(httpConfig && httpConfig.hasOwnProperty('da-loader') && httpConfig['da-loader'] === false ){
+        if(httpConfig && httpConfig.hasOwnProperty('pluton-loader') && httpConfig['pluton-loader'] === false ){
             return element;
         }
         vm.incrementRequest();
 
         if (hasPendingRequests()) {
-            LoaderService.enable();
+            PlutonLoaderService.enable();
         }
 
         return element;
@@ -41,7 +41,7 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
         if(Restangular.configuration.fullResponse === false){
             vm.decrementRequest();
             if (!vm.hasPendingRequests()) {
-                LoaderService.disable();
+                PlutonLoaderService.disable();
             }
             return data;
         }
@@ -53,19 +53,19 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
     function errorInterceptor(response, deferred, responseHandler) {
         vm.decrementRequest();
         if (!vm.hasPendingRequests()) {
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         }
         return true; // error not handled
     }
 
     function checkForFullResponse(data){
-        if(data && data.config && data.config.hasOwnProperty('da-loader') && data.config['da-loader'] === false ){
+        if(data && data.config && data.config.hasOwnProperty('pluton-loader') && data.config['pluton-loader'] === false ){
             return true;
         }
 
         vm.decrementRequest();
         if (!vm.hasPendingRequests()) {
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         }
     }
 

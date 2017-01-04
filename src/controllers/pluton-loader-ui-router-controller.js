@@ -1,9 +1,9 @@
 angular
-    .module('da-loader.controllers')
+    .module('pluton-loader.controllers')
     .controller('LoaderUiRouterController', LoaderUiRouterController);
 
 /* @ngInject */
-function LoaderUiRouterController($scope, $rootScope, LoaderService){
+function LoaderUiRouterController($scope, $rootScope, PlutonLoaderService){
     var vm = this;
 
     var onStart;
@@ -18,19 +18,19 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
     ///////////
     function setUp(){
         onStart = $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-            LoaderService.enable();
+            PlutonLoaderService.enable();
         });
 
         onError = $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         });
 
         onSuccess = $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         });
 
         onNotFound = $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         });
     }
 

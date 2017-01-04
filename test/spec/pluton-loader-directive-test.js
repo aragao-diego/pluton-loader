@@ -1,7 +1,7 @@
 // describe('Diretiva do loader', function() {
 //     'use strict';
 //
-//     var LoaderService;
+//     var PlutonLoaderService;
 //     var $rootScope;
 //     var $state;
 //     var $templateCache;
@@ -16,12 +16,12 @@
 //     beforeEach( function(){
 //         module('ui.router');
 //         module('oc.lazyLoad')
-//         module('da-loader.services');
-//         module('da-loader.directives');
+//         module('pluton-loader.services');
+//         module('pluton-loader.directives');
 //     });
 //
 //     angular
-//         .module('da-loader.directives')
+//         .module('pluton-loader.directives')
 //         .controller('TestController', function($scope){
 //             $scope.info;
 //             $scope.loaded = false;
@@ -33,10 +33,10 @@
 //         });
 //
 //
-//     beforeEach( inject(function(_$state_, _$rootScope_, _LoaderService_, _$timeout_, _$compile_, _$templateCache_, _$controller_){
+//     beforeEach( inject(function(_$state_, _$rootScope_, _PlutonLoaderService_, _$timeout_, _$compile_, _$templateCache_, _$controller_){
 //         $state = _$state_;
 //         $rootScope = _$rootScope_;
-//         LoaderService = _LoaderService_;
+//         PlutonLoaderService = _PlutonLoaderService_;
 //         $timeout = _$timeout_;
 //         $compile = _$compile_;
 //         $templateCache = _$templateCache_;
@@ -46,7 +46,7 @@
 //
 //     describe('Compilação simples da diretiva', function(){
 //         beforeEach( function(){
-//             $templateCache.put('da-loader/loader.html','<div class="da-loader" controller="TestController">loading {{info}}</div>');
+//             $templateCache.put('pluton-loader/loader.html','<div class="pluton-loader" controller="TestController">loading {{info}}</div>');
 //
 //             $scope = $rootScope.$new();
 //             $scope.info = "";
@@ -65,7 +65,7 @@
 //
 //         it('Executa o comando de setUp na criação da diretiva', function(){
 //             $scope.info = "From test";
-//             controlador = $controller("TestController", {'$scope': $scope, LoaderService: LoaderService});
+//             controlador = $controller("TestController", {'$scope': $scope, PlutonLoaderService: PlutonLoaderService});
 //             directive = compiledDirective();
 //             console.log($scope.info);
 //
@@ -78,7 +78,7 @@
 //     function compiledDirective(){
 //         //$scope = $rootScope.$new();
 //
-//         var element = angular.element('<da-loader></da-loader>');
+//         var element = angular.element('<pluton-loader></pluton-loader>');
 //         var compiledElement = $compile(element)($scope);
 //
 //         $rootScope.$digest();

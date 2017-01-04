@@ -1,16 +1,16 @@
 angular
-    .module('da-loader')
+    .module('pluton-loader')
     .config(configLoader);
 
 /* @ngInject */
 function configLoader($ocLazyLoadProvider){
     $ocLazyLoadProvider.config({
         modules: [{
-            name: 'da-loader',
+            name: 'pluton-loader',
             serie: true,
             files: [
-                'bower_components/da-loader/dist/da-loader.css',
-                'bower_components/da-loader/dist/da-loader.html'                
+                'bower_components/pluton-loader/dist/pluton-loader.css',
+                'bower_components/pluton-loader/dist/pluton-loader.html'
             ]
         }]
     });

@@ -1,9 +1,9 @@
 angular
-    .module('da-loader.controllers')
-    .controller('DALoaderController', DALoaderController);
+    .module('pluton-loader.controllers')
+    .controller('PlutonLoaderController', PlutonLoaderController);
 
 /*@ngInject*/
-function DALoaderController($scope, $controller, $rootScope, LoaderService){
+function PlutonLoaderController($scope, $controller, $rootScope, PlutonLoaderService){
     var vm = this;
     var onDestroy;
     var watchChangeInService;
@@ -47,7 +47,7 @@ function DALoaderController($scope, $controller, $rootScope, LoaderService){
 
     function setUp(){
         watchChangeInService = $scope.$watch(function(){
-            return LoaderService.isActive();
+            return PlutonLoaderService.isActive();
         }, function(newValue, oldValue){
             $scope.display = newValue;
         });

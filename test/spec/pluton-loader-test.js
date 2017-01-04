@@ -1,7 +1,7 @@
 describe('Diretiva com o controlador ui-router do loader', function() {
     'use strict';
     /*
-    var LoaderService;
+    var PlutonLoaderService;
     var $rootScope;
     var $state;
     var $templateCache;
@@ -32,7 +32,7 @@ describe('Diretiva com o controlador ui-router do loader', function() {
     beforeEach( function(){
         module('ui.router');
         module('oc.lazyLoad')
-        module('da-loader.controllers');   
+        module('pluton-loader.controllers');   
     });
 
     beforeEach( module(function($stateProvider, $provide, $urlRouterProvider){
@@ -44,10 +44,10 @@ describe('Diretiva com o controlador ui-router do loader', function() {
         }); 
     }));
 
-    beforeEach( inject(function(_$state_, _$rootScope_, _LoaderService_, _$timeout_, _$compile_, _$templateCache_, _$controller_){
+    beforeEach( inject(function(_$state_, _$rootScope_, _PlutonLoaderService_, _$timeout_, _$compile_, _$templateCache_, _$controller_){
         $state = _$state_;
         $rootScope = _$rootScope_;
-        LoaderService = _LoaderService_;
+        PlutonLoaderService = _PlutonLoaderService_;
         $timeout = _$timeout_;
         $compile = _$compile_;
         $templateCache = _$templateCache_;
@@ -64,25 +64,25 @@ describe('Diretiva com o controlador ui-router do loader', function() {
             expect($state.current.name).toBe('app');
         });
 
-        it('Deve chamar enable e disabled quando mudar para um state valido', inject(function(LoaderService){
-            spyOn(LoaderService,"enable");
-            spyOn(LoaderService,"disable");
+        it('Deve chamar enable e disabled quando mudar para um state valido', inject(function(PlutonLoaderService){
+            spyOn(PlutonLoaderService,"enable");
+            spyOn(PlutonLoaderService,"disable");
             directive = compiledDirective(); 
 
             $state.transitionTo('app.tela1', {}, {});
             $rootScope.$digest();
 
             expect($state.current.name).toBe('app.tela1');
-            expect(LoaderService.enable).toHaveBeenCalled();
-            expect(LoaderService.disable).toHaveBeenCalled();  
+            expect(PlutonLoaderService.enable).toHaveBeenCalled();
+            expect(PlutonLoaderService.disable).toHaveBeenCalled();  
         }));
 
-        it('Deve chamar disabled quando mudar para um state invalido', inject(function(LoaderService){
+        it('Deve chamar disabled quando mudar para um state invalido', inject(function(PlutonLoaderService){
             $state.transitionTo('app', {}, {});
             $rootScope.$digest();
 
-            spyOn(LoaderService,"enable");
-            spyOn(LoaderService,"disable");
+            spyOn(PlutonLoaderService,"enable");
+            spyOn(PlutonLoaderService,"disable");
 
             directive = compiledDirective(); 
 
@@ -95,8 +95,8 @@ describe('Diretiva com o controlador ui-router do loader', function() {
             
 
             expect($state.current.name).toBe('app');
-            expect(LoaderService.disable).toHaveBeenCalled();
-            expect(LoaderService.isActive()).toBeFalse();
+            expect(PlutonLoaderService.disable).toHaveBeenCalled();
+            expect(PlutonLoaderService.isActive()).toBeFalse();
         }));
 
     });
@@ -106,7 +106,7 @@ describe('Diretiva com o controlador ui-router do loader', function() {
     function compiledDirective(){
         $scope = $rootScope.$new();
 
-        var element = angular.element('<da-loader></da-loader>');
+        var element = angular.element('<pluton-loader></pluton-loader>');
         var compiledElement = $compile(element)($scope);
 
         $rootScope.$digest();

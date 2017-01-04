@@ -1,9 +1,9 @@
 angular
-    .module('da-loader.controllers')
+    .module('pluton-loader.controllers')
     .controller('LoaderNgRouterController', LoaderNgRouterController);
 
 /* @ngInject */
-function LoaderNgRouterController($scope, $rootScope, LoaderService){
+function LoaderNgRouterController($scope, $rootScope, PlutonLoaderService){
     var vm = this;
 
     var onStart;
@@ -17,15 +17,15 @@ function LoaderNgRouterController($scope, $rootScope, LoaderService){
     ///////////
     function setUp(){
         onStart = $rootScope.$on('$routeChangeStart', function(event, toState, toParams, fromState, fromParams){
-            LoaderService.enable();
+            PlutonLoaderService.enable();
         });
 
         onError = $rootScope.$on('$routeChangeError', function(event, toState, toParams, fromState, fromParams, error){
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         });
 
         onSuccess = $rootScope.$on('$routeChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         });
     }
 

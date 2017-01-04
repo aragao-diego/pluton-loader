@@ -1,6 +1,6 @@
 (function(){
 'use strict'
-var moduleName = 'da-loader';
+var moduleName = 'pluton-loader';
 
 var subModules = ['controllers', 'directives', 'services', 'views'];
 subModules.forEach(createSubModules);
@@ -16,29 +16,30 @@ function createSubModules(element, index, array){
 
 
 configLoader.$inject = ["$ocLazyLoadProvider"];angular
-    .module('da-loader')
+    .module('pluton-loader')
     .config(configLoader);
 
 /* @ngInject */
 function configLoader($ocLazyLoadProvider){
     $ocLazyLoadProvider.config({
         modules: [{
-            name: 'da-loader',
+            name: 'pluton-loader',
             serie: true,
             files: [
-                'bower_components/da-loader/dist/da-loader.css',
-                'bower_components/da-loader/dist/da-loader.html'                
+                'bower_components/pluton-loader/dist/pluton-loader.css',
+                'bower_components/pluton-loader/dist/pluton-loader.html'
             ]
         }]
     });
 }
 
-DALoaderController.$inject = ["$scope", "$controller", "$rootScope", "LoaderService"];angular
-    .module('da-loader.controllers')
-    .controller('DALoaderController', DALoaderController);
+
+PlutonLoaderController.$inject = ["$scope", "$controller", "$rootScope", "PlutonLoaderService"];angular
+    .module('pluton-loader.controllers')
+    .controller('PlutonLoaderController', PlutonLoaderController);
 
 /*@ngInject*/
-function DALoaderController($scope, $controller, $rootScope, LoaderService){
+function PlutonLoaderController($scope, $controller, $rootScope, PlutonLoaderService){
     var vm = this;
     var onDestroy;
     var watchChangeInService;
@@ -82,7 +83,7 @@ function DALoaderController($scope, $controller, $rootScope, LoaderService){
 
     function setUp(){
         watchChangeInService = $scope.$watch(function(){
-            return LoaderService.isActive();
+            return PlutonLoaderService.isActive();
         }, function(newValue, oldValue){
             $scope.display = newValue;
         });
@@ -99,13 +100,13 @@ function DALoaderController($scope, $controller, $rootScope, LoaderService){
 }
 
 (function(){
-    LoaderHttpController.$inject = ["$scope", "LoaderService"];
+    LoaderHttpController.$inject = ["$scope", "PlutonLoaderService"];
     angular
-        .module('da-loader.controllers')
+        .module('pluton-loader.controllers')
         .controller('LoaderHttpController', LoaderHttpController);
 
     /* @ngInject */
-    function LoaderHttpController($scope, LoaderService){
+    function LoaderHttpController($scope, PlutonLoaderService){
         var vm = this;
 
         vm.setUp = setUp;
@@ -123,12 +124,12 @@ function DALoaderController($scope, $controller, $rootScope, LoaderService){
 })();
 
 
-LoaderNgRouterController.$inject = ["$scope", "$rootScope", "LoaderService"];angular
-    .module('da-loader.controllers')
+LoaderNgRouterController.$inject = ["$scope", "$rootScope", "PlutonLoaderService"];angular
+    .module('pluton-loader.controllers')
     .controller('LoaderNgRouterController', LoaderNgRouterController);
 
 /* @ngInject */
-function LoaderNgRouterController($scope, $rootScope, LoaderService){
+function LoaderNgRouterController($scope, $rootScope, PlutonLoaderService){
     var vm = this;
 
     var onStart;
@@ -142,15 +143,15 @@ function LoaderNgRouterController($scope, $rootScope, LoaderService){
     ///////////
     function setUp(){
         onStart = $rootScope.$on('$routeChangeStart', function(event, toState, toParams, fromState, fromParams){
-            LoaderService.enable();
+            PlutonLoaderService.enable();
         });
 
         onError = $rootScope.$on('$routeChangeError', function(event, toState, toParams, fromState, fromParams, error){
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         });
 
         onSuccess = $rootScope.$on('$routeChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         });
     }
 
@@ -162,12 +163,12 @@ function LoaderNgRouterController($scope, $rootScope, LoaderService){
 }
 
 
-LoaderRestangularController.$inject = ["$scope", "LoaderService", "Restangular"];angular
-    .module('da-loader.controllers')
+LoaderRestangularController.$inject = ["$scope", "PlutonLoaderService", "Restangular"];angular
+    .module('pluton-loader.controllers')
     .controller('LoaderRestangularController', LoaderRestangularController);
 
 /* @ngInject */
-function LoaderRestangularController($scope, LoaderService, Restangular){
+function LoaderRestangularController($scope, PlutonLoaderService, Restangular){
     var vm = this;
 
     vm.pendingRequests = 0;
@@ -188,13 +189,13 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
     }
 
     function requestInterceptor(element, operation, what, url, headers, params, httpConfig) {
-        if(httpConfig && httpConfig.hasOwnProperty('da-loader') && httpConfig['da-loader'] === false ){
+        if(httpConfig && httpConfig.hasOwnProperty('pluton-loader') && httpConfig['pluton-loader'] === false ){
             return element;
         }
         vm.incrementRequest();
 
         if (hasPendingRequests()) {
-            LoaderService.enable();
+            PlutonLoaderService.enable();
         }
 
         return element;
@@ -205,7 +206,7 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
         if(Restangular.configuration.fullResponse === false){
             vm.decrementRequest();
             if (!vm.hasPendingRequests()) {
-                LoaderService.disable();
+                PlutonLoaderService.disable();
             }
             return data;
         }
@@ -217,19 +218,19 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
     function errorInterceptor(response, deferred, responseHandler) {
         vm.decrementRequest();
         if (!vm.hasPendingRequests()) {
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         }
         return true; // error not handled
     }
 
     function checkForFullResponse(data){
-        if(data && data.config && data.config.hasOwnProperty('da-loader') && data.config['da-loader'] === false ){
+        if(data && data.config && data.config.hasOwnProperty('pluton-loader') && data.config['pluton-loader'] === false ){
             return true;
         }
 
         vm.decrementRequest();
         if (!vm.hasPendingRequests()) {
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         }
     }
 
@@ -247,12 +248,12 @@ function LoaderRestangularController($scope, LoaderService, Restangular){
 }
 
 
-LoaderUiRouterController.$inject = ["$scope", "$rootScope", "LoaderService"];angular
-    .module('da-loader.controllers')
+LoaderUiRouterController.$inject = ["$scope", "$rootScope", "PlutonLoaderService"];angular
+    .module('pluton-loader.controllers')
     .controller('LoaderUiRouterController', LoaderUiRouterController);
 
 /* @ngInject */
-function LoaderUiRouterController($scope, $rootScope, LoaderService){
+function LoaderUiRouterController($scope, $rootScope, PlutonLoaderService){
     var vm = this;
 
     var onStart;
@@ -267,19 +268,19 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
     ///////////
     function setUp(){
         onStart = $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-            LoaderService.enable();
+            PlutonLoaderService.enable();
         });
 
         onError = $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         });
 
         onSuccess = $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         });
 
         onNotFound = $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
-            LoaderService.disable();
+            PlutonLoaderService.disable();
         });
     }
 
@@ -292,20 +293,20 @@ function LoaderUiRouterController($scope, $rootScope, LoaderService){
 }
 
 
-LoaderDirective.$inject = ["$rootScope", "LoaderService", "$parse"];
+LoaderDirective.$inject = ["$rootScope", "PlutonLoaderService", "$parse"];
 angular
-    .module('da-loader.directives')
-    .directive('daLoader', LoaderDirective);
+    .module('pluton-loader.directives')
+    .directive('PlutonLoader', LoaderDirective);
 
 /* @ngInject */
-function LoaderDirective($rootScope, LoaderService, $parse){
+function LoaderDirective($rootScope, PlutonLoaderService, $parse){
     return {
         scope: true,
         priority: 500,
-        controller: "DALoaderController",
+        controller: "PlutonLoaderController",
         controllerAs: "vm",
         restrict: 'AE',
-        templateUrl: 'da-loader/loader.html',
+        templateUrl: 'pluton-loader/loader.html',
         replace: true,
         compile: compile
     };
@@ -334,13 +335,13 @@ function LoaderDirective($rootScope, LoaderService, $parse){
 }
 
 (function(){
-    LoaderHttpInterceptorFactory.$inject = ["$q", "LoaderService"];
+    LoaderHttpInterceptorFactory.$inject = ["$q", "PlutonLoaderService"];
     angular
-        .module('da-loader.services')
-        .factory('daLoaderHttpInterceptor', LoaderHttpInterceptorFactory);
+        .module('pluton-loader.services')
+        .factory('PlutonLoaderHttpInterceptor', LoaderHttpInterceptorFactory);
 
     /*@ngInject*/
-    function LoaderHttpInterceptorFactory($q, LoaderService) {
+    function LoaderHttpInterceptorFactory($q, PlutonLoaderService) {
         var interceptor = {
             // optional method
             'request': requestInterceptor,
@@ -362,7 +363,7 @@ function LoaderDirective($rootScope, LoaderService, $parse){
 
             interceptor.incrementRequest();
             if (hasPendingRequests()) {
-                LoaderService.enable();
+                PlutonLoaderService.enable();
             }
 
 
@@ -380,7 +381,7 @@ function LoaderDirective($rootScope, LoaderService, $parse){
 
             interceptor.decrementRequest();
             if (!interceptor.hasPendingRequests()) {
-                LoaderService.disable();
+                PlutonLoaderService.disable();
             }
 
             return response;
@@ -393,14 +394,14 @@ function LoaderDirective($rootScope, LoaderService, $parse){
 
             interceptor.decrementRequest();
             if (!interceptor.hasPendingRequests()) {
-                LoaderService.disable();
+                PlutonLoaderService.disable();
             }
 
             return $q.reject(rejection);
         }
 
         function notUseLoader(data){
-            if(data && data.hasOwnProperty('da-loader') && data['da-loader'] === false ){
+            if(data && data.hasOwnProperty('pluton-loader') && data['pluton-loader'] === false ){
                 return true;
             }
 
@@ -422,11 +423,11 @@ function LoaderDirective($rootScope, LoaderService, $parse){
 })();
 
 angular
-    .module('da-loader.services')
-    .service('LoaderService', LoaderService );
+    .module('pluton-loader.services')
+    .service('PlutonLoaderService', PlutonLoaderService );
 
 /* @ngInject */
-function LoaderService(){
+function PlutonLoaderService(){
     var vm = this;
 
     var isShowing = false;

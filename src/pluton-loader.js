@@ -1,4 +1,4 @@
-var moduleName = 'da-loader';
+var moduleName = 'pluton-loader';
 
 var subModules = ['controllers', 'directives', 'services', 'views'];
 subModules.forEach(createSubModules);

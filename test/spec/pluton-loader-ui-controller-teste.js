@@ -5,23 +5,23 @@ describe('Controlador implementando os recursos do UI ROUTER', function() {
     var $scope;
     var $controller;
     var controlador;
-    var LoaderService;
+    var PlutonLoaderService;
 
     beforeEach( function(){
         module('ui.router');
         module('oc.lazyLoad');
-        module('da-loader.services');
-        module('da-loader.controllers');
+        module('pluton-loader.services');
+        module('pluton-loader.controllers');
     });
 
-    beforeEach( inject(function(_$rootScope_, _$controller_, _LoaderService_){
+    beforeEach( inject(function(_$rootScope_, _$controller_, _PlutonLoaderService_){
         $rootScope = _$rootScope_;
         $controller = _$controller_;
-        LoaderService = _LoaderService_;
+        PlutonLoaderService = _PlutonLoaderService_;
 
         $scope = $rootScope.$new();
 
-        controlador = $controller('LoaderUiRouterController', {'$scope': $scope, LoaderService: LoaderService});
+        controlador = $controller('LoaderUiRouterController', {'$scope': $scope, PlutonLoaderService: PlutonLoaderService});
     }));
 
 
@@ -40,39 +40,39 @@ describe('Controlador implementando os recursos do UI ROUTER', function() {
         });
 
         it('Escuta o evento $stateChangeStart', function(){
-            spyOn(LoaderService,'enable').and.callThrough();
+            spyOn(PlutonLoaderService,'enable').and.callThrough();
 
             $rootScope.$broadcast('$stateChangeStart', {});
 
-            expect(LoaderService.enable).toHaveBeenCalled();
-            expect(LoaderService.isShowing).toBeTruthy();
+            expect(PlutonLoaderService.enable).toHaveBeenCalled();
+            expect(PlutonLoaderService.isShowing).toBeTruthy();
         });
 
         it('Escuta o evento $stateChangeError', function(){
-            spyOn(LoaderService,'disable').and.callThrough();
+            spyOn(PlutonLoaderService,'disable').and.callThrough();
 
             $rootScope.$broadcast('$stateChangeError', {});
 
-            expect(LoaderService.disable).toHaveBeenCalled();
-            expect(LoaderService.isShowing).toBeFalse();
+            expect(PlutonLoaderService.disable).toHaveBeenCalled();
+            expect(PlutonLoaderService.isShowing).toBeFalse();
         });
 
         it('Escuta o evento $stateChangeSuccess', function(){
-            spyOn(LoaderService,'disable').and.callThrough();
+            spyOn(PlutonLoaderService,'disable').and.callThrough();
 
             $rootScope.$broadcast('$stateChangeSuccess', {});
 
-            expect(LoaderService.disable).toHaveBeenCalled();
-            expect(LoaderService.isShowing).toBeFalse();
+            expect(PlutonLoaderService.disable).toHaveBeenCalled();
+            expect(PlutonLoaderService.isShowing).toBeFalse();
         });
 
         it('Escuta o evento $stateNotFound', function(){
-            spyOn(LoaderService,'disable').and.callThrough();
+            spyOn(PlutonLoaderService,'disable').and.callThrough();
 
             $rootScope.$broadcast('$stateNotFound', {});
 
-            expect(LoaderService.disable).toHaveBeenCalled();
-            expect(LoaderService.isShowing).toBeFalse();
+            expect(PlutonLoaderService.disable).toHaveBeenCalled();
+            expect(PlutonLoaderService.isShowing).toBeFalse();
         });
     });
 
@@ -83,39 +83,39 @@ describe('Controlador implementando os recursos do UI ROUTER', function() {
         });
 
         it('Não escuta o evento $stateChangeStart', function(){
-            spyOn(LoaderService,'enable').and.callThrough();
+            spyOn(PlutonLoaderService,'enable').and.callThrough();
 
             $rootScope.$broadcast('$stateChangeStart', {});
 
-            expect(LoaderService.enable).not.toHaveBeenCalled();
-            expect(LoaderService.isShowing).toBeFalse();
+            expect(PlutonLoaderService.enable).not.toHaveBeenCalled();
+            expect(PlutonLoaderService.isShowing).toBeFalse();
         });
 
         it('Não Escuta o evento $stateChangeError', function(){
-            spyOn(LoaderService,'disable').and.callThrough();
+            spyOn(PlutonLoaderService,'disable').and.callThrough();
 
             $rootScope.$broadcast('$stateChangeError', {});
 
-            expect(LoaderService.disable).not.toHaveBeenCalled();
-            expect(LoaderService.isShowing).toBeFalse();
+            expect(PlutonLoaderService.disable).not.toHaveBeenCalled();
+            expect(PlutonLoaderService.isShowing).toBeFalse();
         });
 
         it('Não Escuta o evento $stateChangeSuccess', function(){
-            spyOn(LoaderService,'disable').and.callThrough();
+            spyOn(PlutonLoaderService,'disable').and.callThrough();
 
             $rootScope.$broadcast('$stateChangeSuccess', {});
 
-            expect(LoaderService.disable).not.toHaveBeenCalled();
-            expect(LoaderService.isShowing).toBeFalse();
+            expect(PlutonLoaderService.disable).not.toHaveBeenCalled();
+            expect(PlutonLoaderService.isShowing).toBeFalse();
         });
 
         it('Não Escuta o evento $stateNotFound', function(){
-            spyOn(LoaderService,'disable').and.callThrough();
+            spyOn(PlutonLoaderService,'disable').and.callThrough();
 
             $rootScope.$broadcast('$stateNotFound', {});
 
-            expect(LoaderService.disable).not.toHaveBeenCalled();
-            expect(LoaderService.isShowing).toBeFalse();
+            expect(PlutonLoaderService.disable).not.toHaveBeenCalled();
+            expect(PlutonLoaderService.isShowing).toBeFalse();
         });
     });
 });

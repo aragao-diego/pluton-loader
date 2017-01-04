@@ -1,10 +1,10 @@
 (function(){
     angular
-        .module('da-loader.services')
-        .factory('daLoaderHttpInterceptor', LoaderHttpInterceptorFactory);
+        .module('pluton-loader.services')
+        .factory('PlutonLoaderHttpInterceptor', LoaderHttpInterceptorFactory);
 
     /*@ngInject*/
-    function LoaderHttpInterceptorFactory($q, LoaderService) {
+    function LoaderHttpInterceptorFactory($q, PlutonLoaderService) {
         var interceptor = {
             // optional method
             'request': requestInterceptor,
@@ -26,7 +26,7 @@
 
             interceptor.incrementRequest();
             if (hasPendingRequests()) {
-                LoaderService.enable();
+                PlutonLoaderService.enable();
             }
 
 
@@ -44,7 +44,7 @@
 
             interceptor.decrementRequest();
             if (!interceptor.hasPendingRequests()) {
-                LoaderService.disable();
+                PlutonLoaderService.disable();
             }
 
             return response;
@@ -57,14 +57,14 @@
 
             interceptor.decrementRequest();
             if (!interceptor.hasPendingRequests()) {
-                LoaderService.disable();
+                PlutonLoaderService.disable();
             }
 
             return $q.reject(rejection);
         }
 
         function notUseLoader(data){
-            if(data && data.hasOwnProperty('da-loader') && data['da-loader'] === false ){
+            if(data && data.hasOwnProperty('pluton-loader') && data['pluton-loader'] === false ){
                 return true;
             }
 

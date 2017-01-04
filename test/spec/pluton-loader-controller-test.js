@@ -5,26 +5,26 @@ describe('Testando o controlador prinicipal da diretiva', function(){
     var $scope;
     var $controller;
     var controlador;
-    var LoaderService;
+    var PlutonLoaderService;
 
     beforeEach( function(){
         module('ui.router');
         module('oc.lazyLoad');
-        module('da-loader.services');
-        module('da-loader.controllers');
+        module('pluton-loader.services');
+        module('pluton-loader.controllers');
 
     });
 
-    beforeEach( inject(function(_$rootScope_, _$controller_, _LoaderService_){
+    beforeEach( inject(function(_$rootScope_, _$controller_, _PlutonLoaderService_){
         $rootScope = _$rootScope_;
         $controller = _$controller_;
-        LoaderService = _LoaderService_;
+        PlutonLoaderService = _PlutonLoaderService_;
 
         $scope = $rootScope.$new();
     }));
 
     angular
-        .module('da-loader.controllers')
+        .module('pluton-loader.controllers')
         .controller('TestController', function($scope){
             $scope.called = false;
             this.setUp = function(){
@@ -51,14 +51,14 @@ describe('Testando o controlador prinicipal da diretiva', function(){
     it('Dá erro quando um controlador de hook não implementa o contrato', inject(function($controller){
         $scope.hooks = ['TestBadController'];
 
-        controlador = $controller('DALoaderController', {'$scope': $scope});
+        controlador = $controller('PlutonLoaderController', {'$scope': $scope});
         expect(controlador.createHooks).toThrow( new Error('O controlador TestBadController não implementa as funções esperadas(setUp,tearDown)'));
     }));
 
     it('Instancia um controllador de hook informado e chama a função de setUp', inject(function($controller){
         $scope.hooks = ['TestController'];
 
-        controlador = $controller('DALoaderController', {'$scope': $scope});
+        controlador = $controller('PlutonLoaderController', {'$scope': $scope});
         controlador.createHooks();
 
         spyOn(controlador.hooks[0],'setUp');
@@ -70,7 +70,7 @@ describe('Testando o controlador prinicipal da diretiva', function(){
     it('Instancia um controllador de hook informado e chama a função de tearDown', inject(function($controller){
         $scope.hooks = ['TestController'];
 
-        controlador = $controller('DALoaderController', {'$scope': $scope});
+        controlador = $controller('PlutonLoaderController', {'$scope': $scope});
         controlador.createHooks();
         controlador.setUp();
 
@@ -84,7 +84,7 @@ describe('Testando o controlador prinicipal da diretiva', function(){
     it('Instancia dois controladores de hooks e chama a função de setUp', inject(function($controller){
         $scope.hooks = ['TestController', 'TestController2'];
 
-        controlador = $controller('DALoaderController', {'$scope': $scope});
+        controlador = $controller('PlutonLoaderController', {'$scope': $scope});
         controlador.createHooks();
 
         spyOn(controlador.hooks[0],'setUp');
@@ -98,7 +98,7 @@ describe('Testando o controlador prinicipal da diretiva', function(){
     it('Instancia um controllador de hook informado e chama a função de tearDown', inject(function($controller){
         $scope.hooks = ['TestController', 'TestController2'];
 
-        controlador = $controller('DALoaderController', {'$scope': $scope});
+        controlador = $controller('PlutonLoaderController', {'$scope': $scope});
         controlador.createHooks();
         controlador.setUp();
 

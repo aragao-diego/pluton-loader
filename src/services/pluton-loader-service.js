@@ -1,9 +1,9 @@
 angular
-    .module('da-loader.services')
-    .service('LoaderService', LoaderService );
+    .module('pluton-loader.services')
+    .service('PlutonLoaderService', PlutonLoaderService );
 
 /* @ngInject */
-function LoaderService(){
+function PlutonLoaderService(){
     var vm = this;
 
     var isShowing = false;
