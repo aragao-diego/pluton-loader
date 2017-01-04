@@ -143,7 +143,7 @@ module.exports = function(grunt) {
 
     concat: {
       options: {
-        banner: '(function(){\n\'use strict\'\n',
+        banner: ';(function(){\n\'use strict\'\n',
         footer: '\n})();'
       },
       dist: {
@@ -185,7 +185,7 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         mangle: false,
-        banner: '(function(){\n\'use strict\'\n',
+        banner: ';(function(){\n\'use strict\'\n',
         footer: '\n})();'
       },
       dist: {
