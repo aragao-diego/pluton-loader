@@ -5,7 +5,7 @@
   "homepage": "https://github.com/aragao-diego/pluton-loader.git",
   "license": "MIT",
   "private": true,
-  "main": ["dist/pluton-loader.js", "dist/pluton-loader.css"],
+  "main": "./dist/pluton-loader.js",
   "ignore": [
     "src",
     "spec",
