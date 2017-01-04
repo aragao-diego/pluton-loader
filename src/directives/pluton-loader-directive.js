@@ -1,7 +1,7 @@
 
 angular
     .module('pluton-loader.directives')
-    .directive('PlutonLoader', LoaderDirective);
+    .directive('plutonLoader', LoaderDirective);
 
 /* @ngInject */
 function LoaderDirective($rootScope, PlutonLoaderService, $parse){
