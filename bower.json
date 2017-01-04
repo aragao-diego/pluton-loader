@@ -1,7 +1,7 @@
 {
   "name": "pluton-loader",
   "description": "Componente LOADER angular",
-  "version": "0.0.72",
+  "version": "0.0.73",
   "homepage": "https://github.com/aragao-diego/pluton-loader.git",
   "license": "MIT",
   "private": true,
